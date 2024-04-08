@@ -1,0 +1,287 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300&family=Noto+Sans+Thai&display=swap');
+@import "animate.css";
+
+* {
+    font-family: 'Noto Sans Thai', sans-serif;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    position: relative;
+    transition: background-image 0.5s ease-out;
+    color: rgb(0, 0, 0);
+    background:
+        url(./../assets/images/background.jpg) center / cover no-repeat fixed;
+}
+
+.jumbotron {
+    background-color: #007bff;
+    color: #fff;
+}
+
+#login-form-container {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+#login-form {
+    margin: 0;
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    width: 95%;
+    max-width: 1000px;
+}
+
+.card-title {
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+.card-text {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.rounded {
+    border-radius: 250px;
+}
+
+#albumImage {
+    display: block;
+    margin: auto;
+    max-width: 100%;
+    height: auto;
+    transition: all 0.5s;
+
+    &:hover {
+        scale: 1.05;
+    }
+}
+
+#audio-section {
+    padding-top: 15px;
+}
+
+#audio-preview {
+    max-width: 84%;
+    margin: 10px;
+}
+
+#noImageText {
+    display: block;
+    text-align: center;
+}
+
+#imageSection {
+    padding-top: 15px;
+    padding-bottom: 30px;
+}
+
+#full-song-btn {
+    max-width: 80%;
+    margin-top: 5px;
+    /* margin-bottom: 15px; */
+}
+
+.table-container {
+    display: block;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.table-connect {
+    margin-top: -1px;
+    /* ระยะห่างระหว่างตาราง */
+}
+
+.btn-copy {
+    width: 80px;
+    height: 135%;
+    padding: 0%;
+}
+
+.btn-copy.copied {
+    background-color: rgb(0, 153, 255);
+    border-color: rgb(0, 153, 255);
+    color: #fff;
+}
+
+.footer-text {
+    width: 80%;
+}
+
+.long-btn {
+    width: 100%;
+}
+
+.blur {
+    border: 1px solid rgba(255, 255, 255, .25);
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.45);
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.25);
+
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+}
+
+.bg-blur {
+    height: 100%;
+    border: 1px solid rgba(255, 255, 255, .25);
+
+    backdrop-filter: blur(calc(1vw + 10px));
+    -webkit-backdrop-filter: blur(calc(1vw + 10px));
+}
+
+
+table,
+th,
+td {
+    /* border: 1px solid black; */
+    height: 40px;
+    border-collapse: collapse;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#copyResultModal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.album-image {
+    border: 1px solid rgba(255, 255, 255, .25);
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.45);
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.25);
+    width: 80%;
+}
+
+.linkText {
+    color: blue;
+    /* color: black; */
+    transition: all 0.2s ease-out;
+    text-decoration: none;
+}
+
+.linkText:hover {
+    border-bottom: 1px solid;
+    color: #007bff;
+}
+
+/* .linkText[href^="http"]:hover {
+    background: url(./../assets/icon/new_tab.png) no-repeat 100%;
+    background-size: 16px 16px;
+    padding-right: 19px;
+} */
+
+/* tr {
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+} */
+
+.loader {
+    height: 70px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: auto;
+    justify-content: center;
+    padding-top: 25px;
+}
+
+.loader .stroke {
+    display: block;
+    position: relative;
+    background: #2e2e2e;
+    height: 100%;
+    width: 5px;
+    border-radius: 50px;
+    margin: 0 5px;
+    animation: animate 0.55s linear infinite;
+}
+
+@keyframes animate {
+    50% {
+        height: 20%;
+    }
+
+    100% {
+        height: 100%;
+    }
+}
+
+.stroke:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.stroke:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.stroke:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+.stroke:nth-child(4) {
+    animation-delay: 0.3s;
+}
+
+.stroke:nth-child(5) {
+    animation-delay: 0.4s;
+}
+
+.stroke:nth-child(6) {
+    animation-delay: 0.5s;
+}
+
+.stroke:nth-child(7) {
+    animation-delay: 0.6s;
+}
+
+.search-btn-spacer {
+    width: 25px;
+}
+
+.subThHeader {
+    font-weight: normal;
+    padding-left: 3px;
+    padding-right: 10px;
+}
+
+.subThHeaderText {
+    align-items: center;
+    font-size: 14px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.thDiv {
+    display: flex;
+}
+
+.subLink {
+    font-size: 14px;
+}
+
+.spotify-active {
+    position: relative;
+    background-color: rgb(33, 37, 41);
+    color: #fff;
+}
+
+.spotify-active:hover {
+    color: rgb(29, 208, 93);
+}
+
+.info-section {
+    margin-bottom: 10px;
+}

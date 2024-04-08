@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="assets/icons/pyoneer_snake.png" type="image/x-icon">
+    <title>PY৹NEER - Login</title>
+    <meta name="author" content="co-authored by Apinan Loratsachan, Kraisorn Kuiraksa, Nichakorn Wangwitthayothin">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animate.css">
+</head>
+
+<body class="bg-blur">
+    <div class="container">
+        <div id="login-form">
+            <div id="login-form-container" class="card blur animate__animated animate__zoomIn">
+                <div class="card-body info-section">
+                    <div id="header" style="padding: 10px;">
+                        <h1 id="headerText" style="color: black; text-align: center; padding-top: 10px;">เข้าสู่ระบบ
+                        </h1>
+                    </div>
+                    </div>
+                    <div class="container">
+                        <div class="row justify-content-md-center">
+                            <div class="col col-lg-4">
+                                <img class="img-fluid" src="assets/icons/pyoneer_bg_less.png" alt="pyoneer logo">
+                            </div>
+                            <div class="col-md-auto col-lg-6">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="InputEmail">อีเมล</label>
+                                        <input type="email" class="form-control" id="InputEmail"
+                                            aria-describedby="emailHelp" placeholder="ใส่อีเมลของคุณ">
+                                        <small id="emailHelp" class="form-text text-muted"></small>
+                                    </div>
+                                    <div style="height: 20px;"></div>
+                                    <div class="form-group">
+                                        <label for="InputPassword">รหัสผ่าน</label>
+                                        <input type="password" class="form-control" id="InputPassword"
+                                            placeholder="รหัสผ่าน">
+                                    </div>
+                                    <div style="height: 20px;"></div>
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                        <label class="form-check-label" for="exampleCheck1">จำอีเมล</label>
+                                    </div>
+                                    <div style="height: 20px;"></div>
+                                    <div id="loginBtnContainer">
+                                        <button type="button" class="btn btn-primary" id="loginBtn" onclick="login()" style="width: 100%;">เข้าสู่ระบบ</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/login.js"></script>
+</body>
+
+</html>

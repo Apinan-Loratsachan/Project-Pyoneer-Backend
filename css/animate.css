@@ -1,0 +1,165 @@
+:root {
+    --animate-delay: 0s;
+}
+
+@keyframes heartbeat {
+    0% {
+        transform: scale(1);
+    }
+    10% {
+        transform: scale(1.2);
+    }
+    20% {
+        transform: scale(1);
+    }
+    30% {
+        transform: scale(1.2);
+    }
+    40% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes btn-heartbeat {
+    0% {
+        transform: scale(1);
+    }
+    10% {
+        transform: scale(0.9);
+    }
+    20% {
+        transform: scale(1.1);
+    }
+    30% {
+        transform: scale(0.9);
+    }
+    40% {
+        transform: scale(1.1);
+    }
+    50% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.heartbeat {
+    animation-name: heartbeat;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+
+.delay-0 {
+    animation-delay: calc(var(--animate-delay) + 0s) !important;
+}
+
+.delay-1 {
+    animation-delay: calc(var(--animate-delay) + 0s) !important;
+}
+
+.delay-2 {
+    animation-delay: calc(var(--animate-delay) + 0.10s) !important;
+}
+
+.delay-3 {
+    animation-delay: calc(var(--animate-delay) + 0.20s) !important;
+}
+
+.delay-4 {
+    animation-delay: calc(var(--animate-delay) + 0.30s) !important;
+}
+
+.delay-5 {
+    animation-delay: calc(var(--animate-delay) + 0.40s) !important;
+}
+
+.delay-6 {
+    animation-delay: calc(var(--animate-delay) + 0.50s) !important;
+}
+
+.delay-7 {
+    animation-delay: calc(var(--animate-delay) + 0.60s) !important;
+}
+
+.delay-8 {
+    animation-delay: calc(var(--animate-delay) + 0.70s) !important;
+}
+
+.delay-9 {
+    animation-delay: calc(var(--animate-delay) + 0.80s) !important;
+}
+
+.delay-10 {
+    animation-delay: calc(var(--animate-delay) + 0.90s) !important;
+}
+
+.delay-11 {
+    animation-delay: calc(var(--animate-delay) + 1s) !important;
+}
+
+.delay-12 {
+    animation-delay: calc(var(--animate-delay) + 1.10s) !important;
+}
+
+.delay-13 {
+    animation-delay: calc(var(--animate-delay) + 1.20s) !important;
+}
+
+.delay-14 {
+    animation-delay: calc(var(--animate-delay) + 1.30s) !important;
+}
+
+.delay-15 {
+    animation-delay: calc(var(--animate-delay) + 1.40s) !important;
+}
+
+.delay-16 {
+    animation-delay: calc(var(--animate-delay) + 1.50s) !important;
+}
+
+.delay-17 {
+    animation-delay: calc(var(--animate-delay) + 1.60s) !important;
+}
+
+.delay-18 {
+    animation-delay: calc(var(--animate-delay) + 1.70s) !important;
+}
+
+.spotify-animate {
+    animation-name: btn-heartbeat;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+
+.btn-hover {
+    scale: 1;
+    transition: all 0.5s;
+    &:hover {
+        scale: 1.2;
+        /* border: 0; */
+    }
+}
+
+.long-btn-hover {
+    scale: 1;
+    transition: all 0.5s;
+    &:hover {
+        scale: 1.1;
+    }
+}
+
+.very-long-btn-hover {
+    scale: 1;
+    transition: all 0.5s;
+    &:hover {
+        scale: 1.05 1.1;
+    }
+}
+
+#albumImageLink {
+    transition: all;
+}
