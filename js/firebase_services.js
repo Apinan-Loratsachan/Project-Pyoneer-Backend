@@ -10,7 +10,7 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 firebase.auth().onAuthStateChanged((user) => {
-    if (!user && window.location.pathname != '/login.html') {
+    if (!user && !(window.location.pathname == '/login.html' || window.location.pathname == '/Project-Pyoneer-Backend/login.html')) {
         window.location.replace("login.html");
     }
 });
