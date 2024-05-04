@@ -20,9 +20,6 @@ function signInWithGoogle() {
             const credential = result.credential;
             // The signed-in user info.
             const user = result.user;
-            // Display user information or redirect as needed
-            console.log(user);
-            console.log(`UID : ${user.uid}\nEmail : ${user.email}\nDisplay name : ${user.displayName}\nUser Image : ${user.photoURL}`);
         }).catch((error) => {
             document.getElementById("loginMethodContainer").innerHTML = loginMethodBtn
             // Handle errors here.

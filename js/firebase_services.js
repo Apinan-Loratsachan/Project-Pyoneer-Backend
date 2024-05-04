@@ -17,9 +17,9 @@ firebase.auth().onAuthStateChanged(async (user) => {
     } else {
         const approve = firestore.collection("web-approve");
         userApproveData = await getDocumentFromFirestore(approve, user.email)
-        if (userApproveData.approve == false && nowPath != '/verify') {
+        if (userApproveData.approve == false && (nowPath != '/verify' || nowPath != '/Project-Pyoneer-Backend/verify')) {
             window.location.replace("verify.html");
-        } else if (userApproveData.approve == true && nowPath == '/verify') {
+        } else if (userApproveData.approve == true && (nowPath == '/verify' || nowPath == '/Project-Pyoneer-Backend/verify')) {
             window.location.replace("user-detail.html");
         }
     }
