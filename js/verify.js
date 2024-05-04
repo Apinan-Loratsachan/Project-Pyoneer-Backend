@@ -2,7 +2,7 @@ firebase.auth().onAuthStateChanged((user) => {
     if (user) {
         // User is signed in.
         document.getElementById('uid').innerHTML = `<Strong class="prevent-all">UID : </Strong>${user.uid}<div style="height: 20px;"></div>`
-        document.getElementById('email').innerHTML = `<Strong class="prevent-all">Email : </Strong>${user.email}<div style="height: 20px;"></div>`
+        document.getElementById('email').innerHTML = `<Strong class="prevent-all">Email : </Strong><span style="color: Blue;">${user.email}</span><div style="height: 20px;"></div>`
         document.getElementById('display_name').innerHTML = `<Strong class="prevent-all">Display name : </Strong>${user.displayName}<div style="height: 20px;"></div>`
         const imageElement = document.createElement('img')
         imageElement.classList = 'img-fluid prevent-all'
