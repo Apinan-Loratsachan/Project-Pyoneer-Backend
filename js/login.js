@@ -62,60 +62,60 @@ firebase.auth().onAuthStateChanged(async (user) => {
         }
     } else {
         // No user is signed in.
-        document.body.innerHTML = `<div class="container padding-space" id="login-container">
-        <div id="login-form-container" class="card blur animate__animated animate__zoomIn">
-            <div class="card-body info-section">
-                <div id="header" style="padding: 10px;">
-                    <h1 id="headerText" style="color: black; text-align: center; padding-top: 10px;">เข้าสู่ระบบ
-                    </h1>
-                </div>
-                <div id="liveAlertPlaceholder"></div>
+        document.getElementById("login-container").innerHTML = `<div id="login-form-container" class="card blur animate__animated animate__zoomIn">
+        <div class="card-body info-section">
+            <div id="header" style="padding: 10px;">
+                <h1 id="headerText" style="color: black; text-align: center; padding-top: 10px;">เข้าสู่ระบบ
+                </h1>
             </div>
-            <div class="container">
-                <div class="row justify-content-md-center">
-                    <div class="col col-lg-4">
-                        <img class="img-fluid prevent-all" src="assets/icons/pyoneer_bg_less.png" alt="pyoneer logo">
-                    </div>
-                    <div class="col-md-auto col-lg-6">
-                        <form action="javascript:;" onsubmit="loginWithEmailPassword()">
-                            <div class="form-group">
-                                <label for="InputEmail">อีเมล</label>
-                                <input type="email" class="form-control" id="InputEmail" aria-describedby="emailHelp"
-                                    placeholder="Email" required>
-                                <small id="emailHelp" class="form-text text-muted"></small>
+            <div id="liveAlertPlaceholder"></div>
+        </div>
+        <div class="container">
+            <div class="row justify-content-md-center">
+                <div class="col col-lg-4">
+                    <img class="img-fluid prevent-all" src="assets/icons/pyoneer_bg_less.png" alt="pyoneer logo">
+                </div>
+                <div class="col-md-auto col-lg-6">
+                    <form action="javascript:;" onsubmit="loginWithEmailPassword()">
+                        <div class="form-group">
+                            <label for="InputEmail">อีเมล</label>
+                            <input type="email" class="form-control" id="InputEmail" aria-describedby="emailHelp"
+                                placeholder="Email" required>
+                            <small id="emailHelp" class="form-text text-muted"></small>
+                        </div>
+                        <div style="height: 20px;"></div>
+                        <div class="form-group">
+                            <label for="InputPassword">รหัสผ่าน</label>
+                            <input type="password" class="form-control" id="InputPassword" placeholder="Password"
+                                required>
+                        </div>
+                        <div style="height: 20px;"></div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberEmail">
+                            <label class="form-check-label" for="exampleCheck1">จดจำอีเมล</label>
+                        </div>
+                        <div style="height: 20px;"></div>
+                        <div id="loginMethodContainer">
+                            <div id="loginBtnContainer">
+                                <button type="submit" class="btn btn-dark" id="loginBtn"
+                                    style="width: 100%;">เข้าสู่ระบบ</button>
                             </div>
-                            <div style="height: 20px;"></div>
-                            <div class="form-group">
-                                <label for="InputPassword">รหัสผ่าน</label>
-                                <input type="password" class="form-control" id="InputPassword" placeholder="Password" required>
+                            <div class="text-center my-3">
+                                หรือ
                             </div>
-                            <div style="height: 20px;"></div>
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="rememberEmail">
-                                <label class="form-check-label" for="exampleCheck1">จดจำอีเมล</label>
+                            <div id="googleLoginContainer">
+                                <button type="button" class="btn btn-primary" id="googleLoginBtn"
+                                    onclick="signInWithGoogle()" style="width: 100%;">เข้าสู่ระบบด้วย
+                                    Google</button>
                             </div>
-                            <div style="height: 20px;"></div>
-                            <div id="loginMethodContainer">
-                                <div id="loginBtnContainer">
-                                    <button type="submit" class="btn btn-dark" id="loginBtn" 
-                                        style="width: 100%;">เข้าสู่ระบบ</button>
-                                </div>
-                                <div class="text-center my-3">
-                                    หรือ
-                                </div>
-                                <div id="googleLoginContainer">
-                                    <button type="button" class="btn btn-primary" id="googleLoginBtn"
-                                        onclick="signInWithGoogle()" style="width: 100%;">เข้าสู่ระบบด้วย
-                                        Google</button>
-                                </div>
-                            </div>
-                            <div style="height: 20px;"></div>
-                        </form>
-                    </div>
+                        </div>
+                        <div style="height: 20px;"></div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>`
+
         if (window.innerHeight <= 785 || window.innerWidth <= 767) {
             this.document.getElementById('login-container').classList.remove('padding-space')
             this.document.getElementById('login-container').classList.add('padding-space2')
@@ -123,7 +123,6 @@ firebase.auth().onAuthStateChanged(async (user) => {
             this.document.getElementById('login-container').classList.remove('padding-space2')
             this.document.getElementById('login-container').classList.add('padding-space')
         }
-
         if (localStorage.getItem("rememberEmail") == 'true') {
             document.getElementById('rememberEmail').checked = true
             document.getElementById('InputEmail').value = localStorage.getItem("email")
