@@ -10,7 +10,7 @@ firebase.auth().onAuthStateChanged((user) => {
         imageElement.src = user.photoURL
         imageElement.alt = "user_image"
         imageElement.id = "user_image"
-        imageElement.setAttribute('style', "margin-bottom: 50px;")
+        imageElement.setAttribute('style', "margin-bottom: 50px; border-radius: 10px;")
         document.getElementById('user_image_container').appendChild(imageElement)
     } else {
         // No user is signed in.
