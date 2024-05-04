@@ -1,3 +1,11 @@
+if (window.innerHeight <= 785 || window.innerWidth <= 767) {
+    this.document.getElementById('login-container').classList.remove('padding-space')
+    this.document.getElementById('login-container').classList.add('padding-space2')
+} else {
+    this.document.getElementById('login-container').classList.remove('padding-space2')
+    this.document.getElementById('login-container').classList.add('padding-space')
+}
+
 function login() {
     loginMethodBtn = document.getElementById("loginMethodContainer").innerHTML
     document.getElementById("loginMethodContainer").innerHTML = `
@@ -73,5 +81,15 @@ firebase.auth().onAuthStateChanged((user) => {
     } else {
         // No user is signed in.
         console.log('No user signed in.');
+    }
+});
+
+window.addEventListener('resize', function () {
+    if (window.innerHeight <= 785 || window.innerWidth <= 767) {
+        this.document.getElementById('login-container').classList.remove('padding-space')
+        this.document.getElementById('login-container').classList.add('padding-space2')
+    } else {
+        this.document.getElementById('login-container').classList.remove('padding-space2')
+        this.document.getElementById('login-container').classList.add('padding-space')
     }
 });

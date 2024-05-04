@@ -2,11 +2,11 @@ firebase.auth().onAuthStateChanged((user) => {
     if (user) {
         // User is signed in.
         console.log(user)
-        document.getElementById('uid').innerHTML = `<Strong>UID : </Strong>${user.uid}`
-        document.getElementById('email').innerHTML = `<Strong>Email : </Strong>${user.email}`
-        document.getElementById('display_name').innerHTML = `<Strong>Display name : </Strong>${user.displayName}`
+        document.getElementById('uid').innerHTML = `<Strong class="prevent-all">UID : </Strong>${user.uid}<div style="height: 20px;"></div>`
+        document.getElementById('email').innerHTML = `<Strong class="prevent-all">Email : </Strong>${user.email}<div style="height: 20px;"></div>`
+        document.getElementById('display_name').innerHTML = `<Strong class="prevent-all">Display name : </Strong>${user.displayName}<div style="height: 20px;"></div>`
         const imageElement = document.createElement('img')
-        imageElement.className = 'img-fluid'
+        imageElement.classList = 'img-fluid prevent-all'
         imageElement.src = user.photoURL
         imageElement.alt = "user_image"
         imageElement.id = "user_image"
@@ -27,3 +27,13 @@ function signOut() {
         console.error(error.message);
     });
 }
+
+// window.addEventListener('resize', function () {
+//     if (window.innerHeight <= 550 || window.innerWidth <= 767) {
+//         this.document.getElementById('login-container').classList.remove('padding-space')
+//         this.document.getElementById('login-container').classList.add('padding-space2')
+//     } else {
+//         this.document.getElementById('login-container').classList.remove('padding-space2')
+//         this.document.getElementById('login-container').classList.add('padding-space')
+//     }
+// });

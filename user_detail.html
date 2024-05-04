@@ -14,10 +14,10 @@
     <link rel="stylesheet" href="css/animate.css">
 </head>
 
-<body class="bg-blur">
-    <div class="container" id="login-container">
+<body class="">
+    <div class="container padding-space" id="login-container">
         <div id="login-form-container" class="card blur animate__animated animate__zoomIn">
-            <div class="card-body info-section">
+            <div class="card-body info-section prevent-all">
                 <div id="header" style="padding: 10px;">
                     <h1 id="headerText" style="color: black; text-align: center; padding-top: 10px;">ข้อมูลผู้ใช้
                     </h1>
@@ -25,17 +25,18 @@
             </div>
             <div class="container">
                 <div class="row justify-content-md-center">
-                    <div class="col col-lg-4" style="text-align: center;" id="user_image_container"></div>
-                    <div class="col-md-auto col-lg-6" style="margin-bottom: 50px;">
+                    <div class="col col-lg-4 prevent-all" style="text-align: center;" id="user_image_container"></div>
+                    <div class="col-md-auto col-lg-6">
                         <Div id="uid"></Div>
                         <Div id="email"></Div>
                         <Div id="display_name"></Div>
-                        <div style="height: 20px;"></div>
-                        <div id="loginBtnContainer">
-                            <button type="button" class="btn btn-primary" id="loginBtn" onclick="signOut()"
-                                style="width: 100%;">ออกจากระบบ</button>
-                        </div>
                     </div>
+                </div>
+                <div class="row justify-content-md-center">
+                    <div id="looutBtnContainer" class="col col-lg-10" style="text-align: center;">
+                        <button type="button" class="btn btn-primary" id="loginBtn" style="width: 100%; max-width: 600px;" onclick="signOut()">ออกจากระบบ</button>
+                    </div>
+                    <div style="height: 20px;"></div>
                 </div>
             </div>
         </div>

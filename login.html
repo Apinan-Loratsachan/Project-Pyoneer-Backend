@@ -12,10 +12,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/background.css">
 </head>
 
-<body class="bg-blur">
-    <div class="container" id="login-container">
+<body class="prevent-select">
+    <div class="container padding-space" id="login-container">
         <div id="login-form-container" class="card blur animate__animated animate__zoomIn">
             <div class="card-body info-section">
                 <div id="header" style="padding: 10px;">
@@ -26,25 +27,25 @@
             <div class="container">
                 <div class="row justify-content-md-center">
                     <div class="col col-lg-4">
-                        <img class="img-fluid" src="assets/icons/pyoneer_bg_less.png" alt="pyoneer logo">
+                        <img class="img-fluid prevent-all" src="assets/icons/pyoneer_bg_less.png" alt="pyoneer logo">
                     </div>
                     <div class="col-md-auto col-lg-6">
                         <form>
                             <div class="form-group">
                                 <label for="InputEmail">อีเมล</label>
                                 <input type="email" class="form-control" id="InputEmail" aria-describedby="emailHelp"
-                                    placeholder="ใส่อีเมลของคุณ">
+                                    placeholder="Email">
                                 <small id="emailHelp" class="form-text text-muted"></small>
                             </div>
                             <div style="height: 20px;"></div>
                             <div class="form-group">
                                 <label for="InputPassword">รหัสผ่าน</label>
-                                <input type="password" class="form-control" id="InputPassword" placeholder="รหัสผ่าน">
+                                <input type="password" class="form-control" id="InputPassword" placeholder="Password">
                             </div>
                             <div style="height: 20px;"></div>
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                <label class="form-check-label" for="exampleCheck1">จำอีเมล</label>
+                                <label class="form-check-label" for="exampleCheck1">จดจำอีเมล</label>
                             </div>
                             <div style="height: 20px;"></div>
                             <div id="loginMethodContainer">
@@ -67,7 +68,6 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
     <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore-compat.js"></script>
