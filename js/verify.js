@@ -4,12 +4,17 @@ firebase.auth().onAuthStateChanged(async (user) => {
         userApproveData = await getDocumentFromFirestore("web-approve", user.email)
         if (userApproveData.approve == false) {
             document.getElementById('login-container').innerHTML = `<div id="login-form-container" class="card blur animate__animated animate__zoomIn">
-            <div class="card-body info-section prevent-all">
+            <div class="card-body info-section prevent-select">
                 <div id="header" style="padding: 10px;">
-                    <h1 id="headerText" style="color: black; text-align: center; padding-top: 10px;">ยืนยันตัวตน
+                    <div style="text-align: right">
+                        <a href="">
+                            <i class="fa-solid fa-arrows-rotate fa-xl back-hyperlink"></i>
+                        </a>
+                    </div>
+                    <h1 id="headerText" style="color: black; text-align: center; padding-top: 10px; margin-top: -24px;">ยืนยันตัวตน
                     </h1>
                     <div style="height: 20px;"></div>
-                    <div class="text-center">กรุณายืนยันตัวตนโดยโทรไปที่หมายเลข <b>098-765-4321</b> และแจ้ง <b>Email</b> ให้กับเจ้าหน้าที่</div>
+                    <div class="text-center">โปรดติดต่อเจ้าหน้าที่ที่หมายเลข <b>098-765-4321</b> เพื่อยืนยันตัวตน และแจ้ง <b>Email</b> ของคุณที่แสดงอยู่ในข้อมูลด่านล่างให้กับเจ้าหน้าที่</div>
                     <div style="height: 20px;"></div>
                 </div>
             </div>
@@ -18,11 +23,19 @@ firebase.auth().onAuthStateChanged(async (user) => {
                 </h4>
                 <div style="height: 20px;"></div>
                 <div class="row justify-content-md-center">
-                    <div class="col col-lg-4 prevent-all" style="text-align: center;" id="user_image_container"></div>
+                    <div class="col col-lg-4 prevent-all" style="text-align: center;" id="user_image_container">
+                        <img src="${user.photoURL}" alt="user image" class="user-detail-image prevent-all" id="user_image">
+                    </div>
                     <div class="col-md-auto col-lg-6">
-                        <Div id="uid"></Div>
-                        <Div id="email"></Div>
-                        <Div id="display_name"></Div>
+                        <Div id="uid">
+                            <Strong class="prevent-all">UID : </Strong>${user.uid}<div style="height: 20px;"></div>
+                        </Div>
+                        <Div id="email">
+                            <Strong class="prevent-all">Email : </Strong><span style="color: Blue;">${user.email}</span><div style="height: 20px;"></div>
+                        </Div>
+                        <Div id="display_name">
+                            <Strong class="prevent-all">Display name : </Strong>${user.displayName}<div style="height: 20px;"></div>
+                        </Div>
                     </div>
                 </div>
                 <div class="row justify-content-md-center">
@@ -33,16 +46,6 @@ firebase.auth().onAuthStateChanged(async (user) => {
                 </div>
             </div>
         </div>`
-
-            document.getElementById('uid').innerHTML = `<Strong class="prevent-all">UID : </Strong>${user.uid}<div style="height: 20px;"></div>`
-            document.getElementById('email').innerHTML = `<Strong class="prevent-all">Email : </Strong><span style="color: Blue;">${user.email}</span><div style="height: 20px;"></div>`
-            document.getElementById('display_name').innerHTML = `<Strong class="prevent-all">Display name : </Strong>${user.displayName}<div style="height: 20px;"></div>`
-            const imageElement = document.createElement('img')
-            imageElement.classList = 'img-fluid main-hyperlink-image prevent-all'
-            imageElement.src = user.photoURL
-            imageElement.alt = "user_image"
-            imageElement.id = "user_image"
-            document.getElementById('user_image_container').appendChild(imageElement)
         }
     } else {
         // No user is signed in.

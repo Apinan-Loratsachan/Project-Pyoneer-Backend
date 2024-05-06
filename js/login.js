@@ -65,6 +65,9 @@ firebase.auth().onAuthStateChanged(async (user) => {
         document.getElementById("login-container").innerHTML = `<div id="login-form-container" class="card blur animate__animated animate__zoomIn">
         <div class="card-body info-section">
             <div id="header" style="padding: 10px;">
+                <div style="text-align: right" onclick="displayInfo()">
+                    <i class="fa-solid fa-circle-info fa-xl back-hyperlink"></i>
+                </div>
                 <h1 id="headerText" style="color: black; text-align: center; padding-top: 10px;">เข้าสู่ระบบ
                 </h1>
             </div>
@@ -242,4 +245,22 @@ function getDocumentFromFirestore(collectionName, documentId) {
             console.error("Error getting document:", error);
             return null;
         });
+}
+
+function displayInfo() {
+    closeAlert()
+    const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
+    const appendAlert = (message, type) => {
+        const wrapper = document.createElement('div')
+        wrapper.innerHTML = [
+            `<div class="alert alert-${type} alert-dismissible" role="alert">`,
+            `   <div>${message}</div>`,
+            '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="closeAlert()"></button>',
+            '</div>'
+        ].join('')
+
+        alertPlaceholder.append(wrapper)
+    }
+
+    appendAlert('Login ได้โดยการใช้บัญชีเดียวกับในแอพลิเคชันโทรศัพท์ สมัครสมาชิกโดยใช้แอพลิเคชันโทรศัพท์ หรือ เข้าสู่ระบบด้วย Google ได้เลย', 'info')
 }

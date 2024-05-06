@@ -109,6 +109,12 @@ body {
     }
 }
 
+.user-detail-image {
+    border-radius: 10px;
+    height: 96px;
+    margin-bottom: 50px;
+}
+
 #albumImage {
     display: block;
     margin: auto;

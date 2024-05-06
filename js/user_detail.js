@@ -5,7 +5,7 @@ firebase.auth().onAuthStateChanged((user) => {
         document.getElementById('email').innerHTML = `<Strong class="prevent-all">Email : </Strong>${user.email}<div style="height: 20px;"></div>`
         document.getElementById('display_name').innerHTML = `<Strong class="prevent-all">Display name : </Strong>${user.displayName}<div style="height: 20px;"></div>`
         const imageElement = document.createElement('img')
-        imageElement.classList = 'img-fluid main-hyperlink-image prevent-all'
+        imageElement.classList = 'user-detail-image prevent-all'
         imageElement.src = user.photoURL
         imageElement.alt = "user_image"
         imageElement.id = "user_image"
