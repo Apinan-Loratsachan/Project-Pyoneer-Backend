@@ -283,12 +283,14 @@ function displayResults(lessons, preTests, postTests, challengeScore) {
         <thead>
             <tr>
                 <th>คะแนน Challenge</th>
+                <th>เวลาที่ใช้ทำ Challenge</th>
                 <th>วันที่และเวลา</th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <td>${challengeScoreData.score}</td>
+                <td>${msToTime(challengeScoreData.timeSpent)}</td>
                 <td>${challengeScoreData.timeStamp ? challengeScoreData.timeStamp.toDate().toLocaleString('th-TH', { timeZone: 'Asia/Bangkok' }) : '-'}</td>
             </tr>
         </tbody>
@@ -299,3 +301,24 @@ function displayResults(lessons, preTests, postTests, challengeScore) {
         document.getElementById('challengeContainer').innerHTML = 'ไม่พบประวัติการทำ Challenge';
     }
 }
+
+function msToTime(s) {
+    var ms = s % 1000;
+    s = (s - ms) / 1000;
+    var secs = s % 60;
+    s = (s - secs) / 60;
+    var mins = s % 60;
+    var hrs = (s - mins) / 60;
+
+    if (hrs.toString().length == 1) {
+        hrs = "0" + hrs
+    }
+    if (mins.toString().length == 1) {
+        mins = "0" + mins
+    }
+    if (secs.toString().length == 1) {
+        secs = "0" + secs
+    }
+  
+    return hrs + ':' + mins + ':' + secs + '.' + ms;
+  }
