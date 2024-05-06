@@ -52,7 +52,7 @@ firebase.auth().onAuthStateChanged(async (user) => {
         userApproveData = await getDocumentFromFirestore(approve, user.email)
         if (userApproveData != null) {
             if (userApproveData.approve == true) {
-                window.location.replace("user-detail.html");
+                window.location.replace("index.html");
             } else {
                 window.location.replace("verify.html");
             }

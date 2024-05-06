@@ -1,37 +1,13 @@
-var firestore = firebase.firestore()
-
-const db = firestore.collection("news")
-
-// document.getElementById("getData").addEventListener("click", (e) => {
-//     e.preventDefault()
-
-//     db.doc().set({
-//         test: "test"
-//     }).then(() => {
-//         console.log("Data saved")
-//     }).catch((error) => {
-//         console.error(error)
-//     })
-// })
-
-document.getElementById("getData").addEventListener("click", (e) => {
-    e.preventDefault();
-
-    document.getElementById("data").innerHTML = ''
-
-    // Get a reference to the "news" collection
-    const newsCollection = firestore.collection("news");
-
-    // Get all documents within the "news" collection
-    newsCollection.get().then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-            // doc.data() is the data of each document
-            const dataDiv = document.createElement('div')
-            dataDiv.innerHTML = "🆔" + doc.id + " ➡️" + doc.data().topic
-            document.getElementById("data").appendChild(dataDiv)
-            console.log(doc.id, " => ", doc.data());
-        });
-    }).catch((error) => {
-        console.error("Error getting documents: ", error);
-    });
+firebase.auth().onAuthStateChanged(async (user) => {
+    if (user) {
+        // User is signed in.
+        document.getElementById('user_image').style.opacity = '0'; // Fade out the image
+        setTimeout(() => {
+            document.getElementById('user_image').src = user.photoURL;
+            document.getElementById('user_image').style.opacity = '1'; // Fade in the new image
+        }, 500); // Adjust the time according to your preference
+    } else {
+        // No user is signed in.
+        console.log('No user signed in.');
+    }
 });

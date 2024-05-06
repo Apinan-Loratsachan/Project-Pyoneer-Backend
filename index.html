@@ -5,31 +5,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="assets/icons/pyoneer_snake.png" type="image/x-icon">
-    <title>PY৹NEER</title>
+    <title>PY৹NEER - หน้าหลัก</title>
     <meta name="author" content="co-authored by Apinan Loratsachan, Kraisorn Kuiraksa, Nichakorn Wangwitthayothin">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/background.css">
 </head>
 
-<body>
-    <div style="text-align: center; padding: 20px;">
-        <a href="login.html">ไปหน้า login</a>
-        <button type="button" id="getData">ทดสอบดึงข้อมูล</button>
-        <div id="data"></div>
+<body class="prevent-select">
+    <div class="container padding-space" id="main-container">
+        <div id="login-form-container" class="card blur animate__animated animate__zoomIn">
+            <div class="card-body info-section">
+                <div id="header" style="padding: 10px;">
+                    <h1 id="headerText" style="color: black; text-align: center; padding-top: 10px;">หน้าหลัก
+                    </h1>
+                </div>
+                <div id="liveAlertPlaceholder"></div>
+            </div>
+            <div class="container main-menu-container">
+                <div class="row justify-content-md-center">
+                    <div class="text-center main-hyperlink-container">
+                        <a class="main-hyperlink">
+                            <div>
+                                <img src="assets/images/search.jpg" alt="logo ค้นหา" class="main-hyperlink-image">
+                            </div>
+                            <div class="main-hyperlink-text">ค้นหาข้อมูล</div>
+                        </a>
+                    </div>
+                    <div class="text-center main-hyperlink-container">
+                        <a class="main-hyperlink" href="user-detail.html">
+                            <div id="user_image_container">
+                                <img src="assets/icons/pyoneer_logo.png" alt="user image" class="main-hyperlink-image prevent-all" id="user_image">
+                            </div>
+                            <div class="main-hyperlink-text">บัญชีผู้ใช้</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
-    <script src="https://kit.fontawesome.com/da71fc72b9.js" crossorigin="anonymous"></script>
     <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-auth-compat.js"></script>
     <script src="js/firebase_services.js"></script>
     <script src="js/app.js"></script>
 </body>

@@ -15,12 +15,11 @@ firebase.auth().onAuthStateChanged(async (user) => {
     if (!user && !(nowPath == '/login' || nowPath == '/Project-Pyoneer-Backend/login')) {
         window.location.replace("login.html");
     } else {
-        const approve = firestore.collection("web-approve");
-        userApproveData = await getDocumentFromFirestore(approve, user.email)
+        userApproveData = await getDocumentFromFirestore("web-approve", user.email)
         if (userApproveData.approve == false && !(nowPath == '/verify' || nowPath == '/Project-Pyoneer-Backend/verify')) {
             window.location.replace("verify.html");
         } else if (userApproveData.approve == true && (nowPath == '/verify' || nowPath == '/Project-Pyoneer-Backend/verify')) {
-            window.location.replace("user-detail.html");
+            window.location.replace("index.html");
         }
     }
 });
@@ -41,7 +40,7 @@ function writeToFirestore(collectionName, documentId, data) {
 
 function getDocumentFromFirestore(collectionName, documentId) {
     // Reference to the document
-    const documentRef = collectionName.doc(documentId);
+    const documentRef = firestore.collection(collectionName).doc(documentId);
 
     // Get the document
     return documentRef.get()

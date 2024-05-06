@@ -21,7 +21,7 @@ body {
     -webkit-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    pointer-events:none;
+    pointer-events: none;
 }
 
 .prevent-select {
@@ -31,7 +31,7 @@ body {
 }
 
 .prevent-pointer {
-    pointer-events:none;
+    pointer-events: none;
 }
 
 .jumbotron {
@@ -39,7 +39,11 @@ body {
     color: #fff;
 }
 
-#login-container {
+#login-container{
+    max-width: 1000px;
+}
+
+#main-container {
     max-width: 1000px;
 }
 
@@ -66,6 +70,43 @@ body {
 
 .rounded {
     border-radius: 250px;
+}
+
+.main-menu-container {
+    width: fit-content;
+}
+
+.main-hyperlink-container {
+    transition: all ease-in-out 0.25s;
+    width: fit-content;
+    padding: 20px;
+    &:hover {
+        transform: translateY(-10px);
+        scale: 1.2;
+    }
+}
+
+.main-hyperlink{
+    text-decoration: none;
+    color: #2e2e2e;
+}
+
+.main-hyperlink-image {
+    transition: all ease-in-out 1s;
+    border-radius: 10px;
+    height: 96px;
+}
+
+.main-hyperlink-text {
+    padding: 10px;
+}
+
+.back-hyperlink {
+    transition: all ease-in-out 0.25s;
+    color: #2e2e2e;
+    &:hover {
+        scale: 1.5;
+    }
 }
 
 #albumImage {
