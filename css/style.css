@@ -115,6 +115,10 @@ body {
     margin-bottom: 50px;
 }
 
+.resultContainer {
+    border-radius: 20px;
+}
+
 #albumImage {
     display: block;
     margin: auto;

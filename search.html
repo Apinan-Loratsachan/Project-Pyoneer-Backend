@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="assets/icons/pyoneer_snake.png" type="image/x-icon">
+    <title>PY৹NEER - ค้นหา</title>
+    <meta name="author" content="co-authored by Apinan Loratsachan, Kraisorn Kuiraksa, Nichakorn Wangwitthayothin">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animate.css">
+</head>
+
+<body>
+    <div class="container padding-space" id="main-container">
+        <div id="login-form-container" class="card blur animate__animated animate__zoomIn prevent-select">
+            <div class="card-body info-section">
+                <div id="header" style="padding: 10px;">
+                    <a href="javascript:history.back()">
+                        <i class="fa-solid fa-arrow-left fa-xl back-hyperlink"></i>
+                    </a>
+                    <h1 id="headerText" style="color: black; text-align: center; padding-top: 10px; margin-top: -24px;">ค้นหา
+                    </h1>
+                </div>
+                <div id="liveAlertPlaceholder"></div>
+            </div>
+            <div class="container" style="padding-left: 25px; padding-right: 25px;">
+                <div class="row justify-content-md-center">
+                    <form action="javascript:;" onsubmit="queryPyoneerData()">
+                        <div class="form-group">
+                            <label for="InputQuery" style="width: 100%; text-align: center;">อีเมลของบัญชีที่ต้องการค้นข้อมูล</label>
+                            <div style="height: 20px;"></div>
+                            <input type="text" class="form-control" id="InputQuery" aria-describedby="emailHelp"
+                                placeholder="example@gmail.com" required style="text-align: center;">
+                            <small id="emailHelp" class="form-text text-muted"></small>
+                        </div>
+                        <div style="height: 20px;"></div>
+                        <div id="loginMethodContainer">
+                            <div id="loginBtnContainer">
+                                <button type="submit" class="btn btn-dark" id="loginBtn"
+                                    style="width: 100%;">ค้นหา</button>
+                            </div>
+                        <div style="height: 20px;"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="searchResultContainer"></div>
+    <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-auth-compat.js"></script>
+    <script src="https://kit.fontawesome.com/da71fc72b9.js" crossorigin="anonymous"></script>
+    <script src="js/firebase_services.js"></script>
+    <script src="js/search.js"></script>
+</body>
+
+</html>
