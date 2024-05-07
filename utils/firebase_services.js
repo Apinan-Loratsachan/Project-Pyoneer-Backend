@@ -13,13 +13,13 @@ var firestore = firebase.firestore();
 firebase.auth().onAuthStateChanged(async (user) => {
     let nowPath = window.location.pathname.replace('.html','')
     if (!user && !(nowPath == '/login' || nowPath == '/Project-Pyoneer-Backend/login')) {
-        window.location.replace("login.html");
+        window.location.replace("./../login.html");
     } else if (user) {
         userApproveData = await getDocumentFromFirestore("web-approve", user.email)
         if (userApproveData.approve == false && !(nowPath == '/verify' || nowPath == '/Project-Pyoneer-Backend/verify')) {
-            window.location.replace("verify.html");
+            window.location.replace("./../verify.html");
         } else if (userApproveData.approve == true && (nowPath == '/verify' || nowPath == '/Project-Pyoneer-Backend/verify')) {
-            window.location.replace("index.html");
+            window.location.replace("./../index.html");
         }
     }
 });

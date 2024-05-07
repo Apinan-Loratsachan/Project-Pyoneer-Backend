@@ -54,6 +54,7 @@ firebase.auth().onAuthStateChanged(async (user) => {
 });
 
 function signOut() {
+    clearUserData()
     firebase.auth().signOut().then(() => {
         // Sign-out successful.
         console.log('User signed out');

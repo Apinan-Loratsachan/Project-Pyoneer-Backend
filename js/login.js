@@ -17,6 +17,7 @@ function signInWithGoogle() {
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(provider)
         .then((result) => {
+            setUserData(result.user.uid, result.user.email, result.user.displayName, result.user.photoURL)
             // This gives you a Google Access Token. You can use it to access Google API.
             const credential = result.credential;
             // The signed-in user info.
@@ -176,10 +177,10 @@ function loginWithEmailPassword() {
         <div style="height: 20px;"></div>`
     try {
         firebase.auth().signInWithEmailAndPassword(email, password)
-            .then((userCredential) => {
+            .then((result) => {
                 // Signed in
-                const user = userCredential.user;
-                console.log('User signed in:', user);
+                setUserData(result.user.uid, result.user.email, result.user.displayName, result.user.photoURL)
+                console.log('User signed in:', result.user);
                 // Redirect or perform any other actions here
             })
             .catch((error) => {
