@@ -1,6 +1,7 @@
 var firestore = firebase.firestore();
 
 function signInWithGoogle() {
+    closeAlert()
     loginMethodBtn = document.getElementById("loginMethodContainer").innerHTML
     document.getElementById("loginMethodContainer").innerHTML = `
         <div class="loader animate__animated animate__infinite">
@@ -30,6 +31,7 @@ function signInWithGoogle() {
             // The firebase.auth.AuthCredential type that was used.
             const credential = error.credential;
             console.error(errorMessage);
+            displayAlert('เข้าสู่ระบบด้วย Google ไม่สำเร็จ', 'danger')
         });
 }
 
@@ -186,26 +188,31 @@ function loginWithEmailPassword() {
                 const errorMessage = error.message;
                 console.error('Login error:', errorMessage);
                 document.getElementById("loginMethodContainer").innerHTML = loginMethodBtn
-                const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
-                const appendAlert = (message, type) => {
-                    const wrapper = document.createElement('div')
-                    wrapper.innerHTML = [
-                        `<div class="alert alert-${type} alert-dismissible" role="alert">`,
-                        `   <div>${message}</div>`,
-                        '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="closeAlert()"></button>',
-                        '</div>'
-                    ].join('')
-
-                    alertPlaceholder.append(wrapper)
-                }
-
-                appendAlert('อีเมลหรือรหัสผ่านไม่ถูกต้อง', 'danger')
+                
                 // Display error message to the user if needed
+                displayAlert("อีเมลหรือรหัสผ่านไม่ถูกต้อง", 'danger')
             });
     }
     catch (e) {
         document.getElementById("loginMethodContainer").innerHTML = loginMethodBtn
     }
+}
+
+function displayAlert(msg, bootstrapColor) {
+    const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
+    const appendAlert = (message, type) => {
+        const wrapper = document.createElement('div')
+        wrapper.innerHTML = [
+            `<div class="alert alert-${type} alert-dismissible" role="alert">`,
+            `   <div>${message}</div>`,
+            '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="closeAlert()"></button>',
+            '</div>'
+        ].join('')
+
+        alertPlaceholder.append(wrapper)
+    }
+
+    appendAlert(msg, bootstrapColor)
 }
 
 function closeAlert() {
@@ -249,18 +256,5 @@ function getDocumentFromFirestore(collectionName, documentId) {
 
 function displayInfo() {
     closeAlert()
-    const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
-    const appendAlert = (message, type) => {
-        const wrapper = document.createElement('div')
-        wrapper.innerHTML = [
-            `<div class="alert alert-${type} alert-dismissible" role="alert">`,
-            `   <div>${message}</div>`,
-            '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="closeAlert()"></button>',
-            '</div>'
-        ].join('')
-
-        alertPlaceholder.append(wrapper)
-    }
-
-    appendAlert('Login ได้โดยการใช้บัญชีเดียวกับในแอพลิเคชันโทรศัพท์ สมัครสมาชิกโดยใช้แอพลิเคชันโทรศัพท์ หรือ เข้าสู่ระบบด้วย Google ได้เลย', 'info')
+    displayAlert('เข้าสู่ระบบด้วย Google หรือ อีเมลและรหัสผ่านที่ใช้ในแอพลิเคชัน PY৹NEER บนโทรศัพท์ สมัครสมาชิกในแอพลิเคชัน PY৹NEER', 'info')
 }
