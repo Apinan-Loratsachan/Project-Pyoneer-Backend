@@ -7,7 +7,7 @@ async function queryPyoneerData222() {
     const collectionName = 'testResult';
     const lessonsCollectionName = 'lessons';
     const challengeScoreCollectionName = 'challengeScore';
-
+    
     try {
         //lesson
         const lessonsCollectionRef = firestore.collection(lessonsCollectionName)
