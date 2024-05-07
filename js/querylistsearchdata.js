@@ -17,7 +17,7 @@ function createTable() {
   </div>`;
   }
 
-async function queryPyoneerData() {
+async function queryPyoneerData123() {
     const userEmails = document.getElementById("InputQuery").value.split(",").map(email => email.trim());
     const testTypes = ["pre-test", "post-test"];
     const collectionName = "testResult";
@@ -71,7 +71,6 @@ function displayResults(userEmail, lessons, preTests, postTests, challengeScore)
       resultHTML += `
         <div>
           <h5 class="prevent-select" id="headerText" style="color: black; text-align: center; padding-top: 10px">บทเรียน</h5>
-          <div style="height: 20px;"></div>
           <div class="text-center" class="resultContainer">
             ${createLessonsTable(lessons)}
           </div>
@@ -108,8 +107,9 @@ function displayResults(userEmail, lessons, preTests, postTests, challengeScore)
     }
   
     if (hasData) {
-      document.getElementById("resultContent").innerHTML += `
+      document.getElementById("searchResultContainer").innerHTML += `
         <div class="text-center">
+          <div style="height: 30px"></div>
           <h4><strong>${userEmail}</strong></h4>
           <h4><strong>↓</strong></h4>
           ${resultHTML}

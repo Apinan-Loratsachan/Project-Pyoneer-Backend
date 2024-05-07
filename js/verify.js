@@ -1,3 +1,4 @@
+console.log(Date().valueOf())
 firebase.auth().onAuthStateChanged(async (user) => {
     if (user) {
         // User is signed in.
