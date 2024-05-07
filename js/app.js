@@ -1,3 +1,5 @@
+logoResize()
+
 firebase.auth().onAuthStateChanged(async (user) => {
     if (user) {
         // User is signed in.
@@ -11,3 +13,15 @@ firebase.auth().onAuthStateChanged(async (user) => {
         console.log('No user signed in.');
     }
 });
+
+window.addEventListener('resize', function () {
+    logoResize()
+});
+
+function logoResize() {
+    if (window.innerWidth >= 575) {
+        document.getElementById('logoContainer').className = 'logoPadding'
+    } else {
+        document.getElementById('logoContainer').className = ''
+    }
+}
