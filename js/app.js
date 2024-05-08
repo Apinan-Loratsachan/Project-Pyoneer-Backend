@@ -34,19 +34,27 @@ firebase.auth().onAuthStateChanged(async (user) => {
                     </a>
                 </div>
                 <div class="text-center main-hyperlink-container">
-                    <a href="javascript:window.location.replace('querylist.html')" class="main-hyperlink">
+                    <a href="javascript:window.location.replace('admin/manage-users.html')" class="main-hyperlink">
                         <div>
                             <img src="assets/images/querylist.jpg" alt="logo ค้นหา" class="main-hyperlink-image prevent-all">
                         </div>
-                        <div class="main-hyperlink-text">Menu 2</div>
+                        <div class="main-hyperlink-text">จัดการข้อมูลผู้ใช้</div>
                     </a>
                 </div>
                 <div class="text-center main-hyperlink-container">
-                    <a class="main-hyperlink" href="javascript:window.location.replace('user-detail.html')">
+                    <a class="main-hyperlink" href="javascript:window.location.replace('admin/manage-users.html')">
                         <div id="user_image_container">
                             <img src="assets/icons/pyoneer_logo.png" alt="user image" class="main-hyperlink-image prevent-all">
                         </div>
-                        <div class="main-hyperlink-text">Menu 3</div>
+                        <div class="main-hyperlink-text">จัดการข้อมูล <br>Challenge</div>
+                    </a>
+                </div>
+                <div class="text-center main-hyperlink-container">
+                    <a class="main-hyperlink" href="javascript:window.location.replace('admin/manage-users.html')">
+                        <div id="user_image_container">
+                            <img src="assets/icons/pyoneer_logo.png" alt="user image" class="main-hyperlink-image prevent-all">
+                        </div>
+                        <div class="main-hyperlink-text">จัดการข้อสอบ <br>Challenge</div>
                     </a>
                 </div>
             </div>

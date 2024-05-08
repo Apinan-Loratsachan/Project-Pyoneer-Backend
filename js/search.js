@@ -1,267 +1,288 @@
-function createTable() {
-  document.getElementById("searchResultContainer").innerHTML = "";
-  document.getElementById(
-    "searchResultContainer"
-  ).innerHTML = `<div class="padding-space" id="result-container">
-      <div class="card blur animate__animated animate__zoomInDown">
-          <div class="card-body info-section">
-              <div id="header" class="prevent-select" style="padding: 10px;">
-                  <h3 id="headerText" style="color: black; text-align: center; padding-top: 10px">ผลการค้นหา
-                  </h3>
-              </div>
-              <div id="liveAlertPlaceholder"></div>
-          </div>
-          <div class="container" style="padding-left: 25px; padding-right: 25px; padding-bottom: 35px;">
-              <div id="resultContent"></div>
-          </div>
-      </div>
-  </div>`;
-}
-
-let isSearching = false;
-
 async function queryPyoneerData() {
-  if (isSearching) return;
-  isSearching = true;
   const userEmails = document
     .getElementById("InputQuery")
     .value.split(",")
     .map((email) => email.trim());
-  const testTypes = ["pre-test", "post-test"];
-  const collectionName = "testResult";
-  const lessonsCollectionName = "lessons";
-  const challengeScoreCollectionName = "challengeScore";
-
-  createTable();
-  document.getElementById("resultContent").innerHTML = "";
+  const querylist = document.getElementById("searchResult");
+  querylist.innerHTML = `
+            <div style="overflow-x:auto;">
+                <table>
+                <colgroup>
+                  <col style="width: 20%">
+                  <col style="width: 23%">
+                  <col style="width: 23%">
+                  <col style="width: 10%">
+                  <col style="width: 10%">
+                </colgroup>
+                <thead clsss="prevent-select">
+                  <tr>
+                      <th><b>อีเมล</b></th>
+                      <th><b>ชื่อผู้ใช้</b></th>
+                      <th><b>รหัสผู้ใช้</b></th>
+                      <th colspan="2"><b>การดำเนินการ</b></th>
+                  </tr>
+                </thead>
+                <tbody id="resultTable" clsss="text-center">
+                </tbody>
+                </table>
+            </div>`;
 
   for (const userEmail of userEmails) {
     try {
-      const lessonsCollectionRef = firestore.collection(lessonsCollectionName);
-      const lessonsSnapshot = await lessonsCollectionRef
-        .where("email", "==", userEmail)
-        .get();
+      const userDocRef = firestore.collection("users").doc(userEmail);
+      const userDoc = await userDocRef.get();
 
-      const preTestSnapshot = await firestore
-        .collection(collectionName)
-        .doc(userEmail)
-        .collection("pre-test")
-        .get();
-      const postTestSnapshot = await firestore
-        .collection(collectionName)
-        .doc(userEmail)
-        .collection("post-test")
-        .get();
+      if (userDoc.exists) {
+        const userData = userDoc.data();
+        const displayName = userData.displayName;
+        const uid = userData.uid;
 
-      const challengeScoreDocRef = firestore
-        .collection(challengeScoreCollectionName)
-        .doc(userEmail);
-      const challengeScoreDoc = await challengeScoreDocRef.get();
+        const listItem = document.createElement("tr");
+        listItem.classList.add("list-item");
 
-      displayResults(
-        userEmail,
-        lessonsSnapshot.docs,
-        preTestSnapshot.docs,
-        postTestSnapshot.docs,
-        challengeScoreDoc.data()
-      );
+        const isBookmarked = await isEmailBookmarked(userEmail);
+        const buttonClass = isBookmarked ? "btn-danger remove-btn" : "btn-primary save-btn";
+        const buttonText = isBookmarked ? "ลบ" : "เพิ่ม";
+
+        listItem.innerHTML = `
+                <td>${userEmail}</td>
+                <td>${displayName}</td>
+                <td>${uid}</td>
+                <td clsss="prevent-select"><button id="${uid}" class="btn ${buttonClass}" data-email="${userEmail}" onclick="searchActionBtn('${uid}', '${userEmail}')">${buttonText}</button></td>
+                <td clsss="prevent-select"><button class="btn btn-secondary view-btn" data-email="${userEmail}">ข้อมูล</button></td>
+                `;
+        document.getElementById("resultTable").appendChild(listItem);
+      } else {
+        const listItem = document.createElement("tr");
+        listItem.classList.add("list-item");
+
+        const isBookmarked = await isEmailBookmarked(userEmail);
+        const buttonClass = isBookmarked ? "btn-danger remove-btn" : "btn-primary save-btn";
+        const buttonText = isBookmarked ? "ลบ" : "เพิ่ม";
+
+        listItem.innerHTML = `
+                <td colspan="5"><b>ไม่พบข้อมูลสำหรับ ${userEmail}</b></td>
+                `;
+        document.getElementById("resultTable").appendChild(listItem);
+      }
     } catch (error) {
-      console.error("Error getting documents:", error);
+      console.error("Error getting user document:", error);
     }
   }
-  isSearching = false;
+
+  const viewButtons = document.querySelectorAll(".view-btn");
+  viewButtons.forEach((button) => {
+    button.addEventListener("click", async () => {
+      const userEmail = button.dataset.email;
+      let searchResultContainer = document.getElementById(
+        `searchResultContainer-${userEmail}`
+      );
+      const row = button.closest("tr");
+
+      if (!searchResultContainer) {
+        // ถ้ายังไม่มี searchResultContainer ให้สร้างใหม่
+        searchResultContainer = document.createElement("div");
+        searchResultContainer.id = `searchResultContainer-${userEmail}`;
+        row.insertAdjacentElement("afterend", searchResultContainer);
+      }
+
+      await displayUserData(userEmail, displayName, searchResultContainer);
+    });
+  });
 }
 
-function displayResults(
-  userEmail,
-  lessons,
-  preTests,
-  postTests,
-  challengeScore
-) {
-  let hasData = false;
-  let resultHTML = "";
-
-  if (lessons.length > 0) {
-    hasData = true;
-    resultHTML += `
-        <div>
-          <h5 class="prevent-select" id="headerText" style="color: black; text-align: center; padding-top: 10px">บทเรียน</h5>
-          <div style="height: 20px;"></div>
-          <div class="text-center" class="resultContainer">
-            ${createLessonsTable(lessons)}
-          </div>
-        </div>
-        <div style="height: 40px;"></div>
-      `;
-  }
-
-  if (preTests.length > 0 || postTests.length > 0) {
-    hasData = true;
-    resultHTML += `
-        <div>
-          <h5 class="prevent-select" id="headerText" style="color: black; text-align: center; padding-top: 10px">แบบทดสอบ</h5>
-          <div style="height: 20px;"></div>
-          <div class="text-center" class="resultContainer">
-            ${createTestsTable(preTests, postTests)}
-          </div>
-        </div>
-        <div style="height: 40px;"></div>
-      `;
-  }
-
-  if (challengeScore) {
-    hasData = true;
-    resultHTML += `
-        <div>
-          <h5 class="prevent-select" id="headerText" style="color: black; text-align: center; padding-top: 10px">Challenge</h5>
-          <div style="height: 20px;"></div>
-          <div class="text-center" class="resultContainer">
-            ${createChallengeScoreTable(challengeScore)}
-          </div>
-        </div>
-      `;
-  }
-
-  if (hasData) {
-    document.getElementById("resultContent").innerHTML += `
-        <div class="text-center">
-          <h4><strong>${userEmail}</strong></h4>
-          <h4><strong>↓</strong></h4>
-          ${resultHTML}
-          <hr style="border-top: 5px solid #000;">
-        </div>
-      `;
+async function searchActionBtn(btnId, userEmail) {
+  console.log(btnId)
+  targetBtn = document.getElementById(btnId)
+  if (targetBtn.classList.contains("save-btn")) {
+    targetBtn.classList.replace("btn-primary", "btn-danger");
+    targetBtn.classList.replace("save-btn", "remove-btn");
+    targetBtn.innerText = 'ลบ'
+    await addToBookmark(userEmail);
+    displayBookmarks();
+  } else {
+    targetBtn.classList.replace("btn-danger", "btn-primary");
+    targetBtn.classList.replace("remove-btn", "save-btn");
+    targetBtn.innerText = 'เพิ่ม'
+    await removeFromBookmark(userEmail);
+    displayBookmarks();
   }
 }
 
-function createLessonsTable(lessons) {
-  lessons.sort((a, b) => a.data().lessonRead - b.data().lessonRead);
-  let tableHTML = `
-      <table class="table table-bordered" style="border-radius: 10px; overflow: hidden;">
-        <thead>
-          <tr>
-            <th>บทที่</th>
-            <th>เวลาที่อ่าน</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${lessons
-            .map((doc) => {
-              const lessonData = doc.data();
-              return `
-                <tr>
-                  <td>${lessonData.lessonRead}</td>
-                  <td>${
-                    lessonData.timestamp
-                      ? lessonData.timestamp.toDate().toLocaleString("th-TH", {
-                          timeZone: "Asia/Bangkok",
-                        })
-                      : "-"
-                  }</td>
-                </tr>
-              `;
-            })
-            .join("")}
-        </tbody>
-      </table>
-    `;
-  return tableHTML;
+async function updateBookmarkButtonState(userEmail) {
+  const button = document.querySelector(`.save-btn[data-email="${userEmail}"], .remove-btn[data-email="${userEmail}"]`);
+  if (button) {
+    const isBookmarked = await isEmailBookmarked(userEmail);
+    const buttonClass = isBookmarked ? "btn-danger remove-btn" : "btn-primary save-btn";
+    const buttonText = isBookmarked ? "ลบ" : "เพิ่ม";
+    button.className = `btn ${buttonClass}`;
+    button.textContent = buttonText;
+  }
 }
 
-function createTestsTable(preTests, postTests) {
-  let tableHTML = "";
-  const testTypes = ["pre-test", "post-test"];
-  testTypes.forEach((testType) => {
-    const tests = testType === "pre-test" ? preTests : postTests;
-    if (tests.length > 0) {
-      tests.sort((a, b) => a.data().lessonTest - b.data().lessonTest);
-      tableHTML += `
-          <table class="table table-bordered" style="border-radius: 10px; overflow: hidden;">
-            <thead>
+async function isEmailBookmarked(email) {
+  getUserData();
+  if (userData.email) {
+    const currentUserEmail = userData.email;
+    const bookmarkDocRef = firestore.collection("bookmarks").doc(currentUserEmail);
+    const bookmarkDoc = await bookmarkDocRef.get();
+    if (bookmarkDoc.exists) {
+      const bookmarkData = bookmarkDoc.data();
+      return bookmarkData.emails.includes(email);
+    }
+  }
+  return false;
+}
+
+async function addToBookmark(userEmail) {
+  getUserData()
+  if (userData.email) {
+    const currentUserEmail = userData.email;
+    const bookmarkDocRef = firestore.collection("bookmarks").doc(currentUserEmail);
+    const bookmarkDoc = await bookmarkDocRef.get();
+    const bookmarkData = bookmarkDoc.exists ? bookmarkDoc.data() : { emails: [] };
+    const updatedEmails = [...bookmarkData.emails, userEmail];
+    await bookmarkDocRef.set({ emails: updatedEmails });
+  }
+}
+
+async function removeFromBookmark(userEmail) {
+  getUserData()
+  if (userData.email) {
+    const currentUserEmail = userData.email;
+    const bookmarkDocRef = firestore.collection("bookmarks").doc(currentUserEmail);
+    const bookmarkDoc = await bookmarkDocRef.get();
+    if (bookmarkDoc.exists) {
+      const bookmarkData = bookmarkDoc.data();
+      const updatedEmails = bookmarkData.emails.filter((email) => email !== userEmail);
+      await bookmarkDocRef.set({ emails: updatedEmails });
+    }
+  }
+}
+
+async function displayBookmarks() {
+  const querylist = document.getElementById("querylist");
+  querylist.innerHTML = "";
+
+  getUserData();
+  if (userData.email) {
+    const currentUserEmail = userData.email;
+    const bookmarkDocRef = firestore.collection("bookmarks").doc(currentUserEmail);
+    const bookmarkDoc = await bookmarkDocRef.get();
+    if (bookmarkDoc.exists) {
+      const bookmarkData = bookmarkDoc.data();
+      const bookmarkedEmails = bookmarkData.emails;
+
+      if (bookmarkedEmails.length > 0) {
+        querylist.innerHTML = `
+        <div style="overflow-x:auto;">
+          <table>
+            <colgroup>
+                <col style="width: 20%">
+                <col style="width: 23%">
+                <col style="width: 23%">
+                <col style="width: 10%">
+                <col style="width: 10%">
+            </colgroup>
+            <thead class="prevent-select">
               <tr>
-                <th>${testType === "pre-test" ? "Pre-test" : "Post-test"}</th>
-                <th>คะแนน</th>
-                <th>เวลาที่ทำแบบทดสอบ</th>
+                <th><b>อีเมล</b></th>
+                <th><b>ชื่อผู้ใช้</b></th>
+                <th><b>รหัสผู้ใช้</b></th>
+                <th colspan="2"><b>การดำเนินการ</b></th>
               </tr>
             </thead>
-            <tbody>
-              ${tests
-                .map((doc) => {
-                  const testData = doc.data();
-                  const lessonTest = testData.lessonTest;
-                  const attemptCount = testData.attemptCount || "";
-                  return `
-                    <tr>
-                      <td>บทที่ ${lessonTest}${
-                    testType === "post-test"
-                      ? ` (ครั้งที่ ${attemptCount})`
-                      : ""
-                  }</td>
-                      <td>${testData.score}</td>
-                      <td>${
-                        testData.timestamp
-                          ? testData.timestamp
-                              .toDate()
-                              .toLocaleString("th-TH", {
-                                timeZone: "Asia/Bangkok",
-                              })
-                          : "-"
-                      }</td>
-                    </tr>
-                  `;
-                })
-                .join("")}
+            <tbody id="bookmarkTable">
             </tbody>
           </table>
-        `;
+        </div>`;
+
+        for (const userEmail of bookmarkedEmails) {
+          const userDocRef = firestore.collection("users").doc(userEmail);
+          const userDoc = await userDocRef.get();
+
+          if (userDoc.exists) {
+            const userData = userDoc.data();
+            const displayName = userData.displayName;
+            const uid = userData.uid;
+
+            const listItem = document.createElement("tr");
+            listItem.classList.add("list-item");
+            listItem.innerHTML = `
+                      <td>${userEmail}</td>
+                      <td>${displayName}</td>
+                      <td>${uid}</td>
+                      <td clsss="prevent-select"><button class="btn btn-danger remove-bookmark-btn" data-email="${userEmail}">ลบ</button></td>
+                      <td clsss="prevent-select"><button class="btn btn-secondary view-bookmark-btn" data-email="${userEmail}">ข้อมูล</button></td>
+                      `;
+            document.getElementById("bookmarkTable").appendChild(listItem);
+
+            const removeButton = listItem.querySelector(".remove-bookmark-btn");
+            removeButton.addEventListener("click", async () => {
+              await removeFromBookmark(userEmail);
+              displayBookmarks();
+              updateBookmarkButtonState(userEmail);
+            });
+
+            const viewButton = listItem.querySelector(".view-bookmark-btn");
+            viewButton.addEventListener("click", async () => {
+              let searchResultContainer = document.getElementById(
+                `searchResultContainer-${userEmail}`
+              );
+              const row = viewButton.closest("tr");
+
+              if (!searchResultContainer) {
+                searchResultContainer = document.createElement("div");
+                searchResultContainer.id = `searchResultContainer-${userEmail}`;
+                row.insertAdjacentElement("afterend", searchResultContainer);
+              }
+
+              await displayUserData(userEmail, displayName, searchResultContainer);
+            });
+          }
+        }
+      } else {
+        querylist.innerHTML = '<div class="text-center">ไม่มีรายการที่บันทึกไว้</div><div style="height:30px"></div>';
+      }
+    } else {
+      querylist.innerHTML = '<div class="text-center">ไม่มีรายการที่บันทึกไว้</div><div style="height:30px"></div>';
     }
-  });
-  return tableHTML;
-}
-
-function createChallengeScoreTable(challengeScore) {
-  let tableHTML = "";
-  if (challengeScore) {
-    tableHTML = `
-        <table class="table table-bordered" style="border-radius: 10px; overflow: hidden;">
-          <thead>
-            <tr>
-              <th>คะแนน Challenge</th>
-              <th>เวลาที่ใช้ทำ Challenge</th>
-              <th>วันที่และเวลา</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>${challengeScore.score}</td>
-              <td>${msToTime(challengeScore.timeSpent)}</td>
-              <td>${
-                challengeScore.timeStamp
-                  ? challengeScore.timeStamp
-                      .toDate()
-                      .toLocaleString("th-TH", { timeZone: "Asia/Bangkok" })
-                  : "-"
-              }</td>
-            </tr>
-          </tbody>
-        </table>
-      `;
+  } else {
+    querylist.innerHTML = '<div class="text-center">ไม่มีรายการที่บันทึกไว้</div><div style="height:30px"></div>';
   }
-  return tableHTML;
 }
 
-function msToTime(s) {
-  var ms = s % 1000;
-  s = (s - ms) / 1000;
-  var secs = s % 60;
-  s = (s - secs) / 60;
-  var mins = s % 60;
-  var hrs = (s - mins) / 60;
+async function displayUserData(userEmail, displayName, searchResultContainer) {
+  const lessonsCollectionRef = firestore.collection("lessons");
+  const lessonsSnapshot = await lessonsCollectionRef
+    .where("email", "==", userEmail)
+    .get();
 
-  hrs = hrs.toString().padStart(2, "0");
-  mins = mins.toString().padStart(2, "0");
-  secs = secs.toString().padStart(2, "0");
+  const preTestSnapshot = await firestore
+    .collection("testResult")
+    .doc(userEmail)
+    .collection("pre-test")
+    .get();
+  const postTestSnapshot = await firestore
+    .collection("testResult")
+    .doc(userEmail)
+    .collection("post-test")
+    .get();
 
-  return hrs + ":" + mins + ":" + secs + "." + ms;
+  const challengeScoreDocRef = firestore
+    .collection("challengeScore")
+    .doc(userEmail);
+  const challengeScoreDoc = await challengeScoreDocRef.get();
+
+  displayResults(
+    userEmail,
+    displayName,
+    lessonsSnapshot.docs,
+    preTestSnapshot.docs,
+    postTestSnapshot.docs,
+    challengeScoreDoc.data(),
+    searchResultContainer
+  );
 }
+
+document.addEventListener("DOMContentLoaded", displayBookmarks);
