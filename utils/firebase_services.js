@@ -14,9 +14,9 @@ firebase.auth().onAuthStateChanged(async (user) => {
     let nowPath = window.location.pathname.replace('.html','')
     if (!user && !(nowPath == '/login' || nowPath == '/Project-Pyoneer-Backend/login')) {
         if (nowPath.includes('/Project-Pyoneer-Backend')) {
-            window.location.replace("./../Project-Pyoneer-Backend/login.html");
+            window.location.replace("/Project-Pyoneer-Backend/login.html");
         } else {
-            window.location.replace("./../login.html");
+            window.location.replace("login.html");
         }
     } else if (user) {
         userApproveData = await getDocumentFromFirestore("web-approve", user.email)
@@ -28,7 +28,7 @@ firebase.auth().onAuthStateChanged(async (user) => {
             }
         } else if (userApproveData.approve == true && (nowPath == '/verify' || nowPath == '/Project-Pyoneer-Backend/verify')) {
             if (nowPath.includes('/Project-Pyoneer-Backend')) {
-                window.location.replace("Project-Pyoneer-Backend/login.html");
+                window.location.replace("/Project-Pyoneer-Backend/login.html");
             } else {
                 window.location.replace("login.html");
             }

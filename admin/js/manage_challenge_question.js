@@ -124,18 +124,18 @@ function showQuestionModal(questionId) {
 
     questionModal = new bootstrap.Modal(questionModal);
 
-    document.getElementById("saveQuestionBtn").addEventListener("click", () => {
-      const questionData = {
-        question: document.getElementById("question").value,
-        choice: [
-          document.getElementById("choice1").value,
-          document.getElementById("choice2").value,
-          document.getElementById("choice3").value,
-          document.getElementById("choice4").value,
-        ],
-        correctChoice: document.getElementById(`choice${document.getElementById("correctChoice").value}`).value,
-        imageUrl: document.getElementById("imageUrl").value,
-      };
+    document.getElementById("saveQuestionBtn").addEventListener("click", async () => {
+        const questionData = {
+          question: document.getElementById("question").value,
+          choice: [
+            document.getElementById("choice1").value,
+            document.getElementById("choice2").value,
+            document.getElementById("choice3").value,
+            document.getElementById("choice4").value,
+          ],
+          correctChoice: document.getElementById(`choice${document.getElementById("correctChoice").value}`).value,
+          imageUrl: document.getElementById("imageUrl").value,
+        };
 
       if (questionModal.questionId) {
         firestore.collection("challengeQuestion").doc(questionModal.questionId).update(questionData)
@@ -144,11 +144,12 @@ function showQuestionModal(questionId) {
             displayChallengeQuestions();
           });
       } else {
-        firestore.collection("challengeQuestion").add(questionData)
-          .then(() => {
-            questionModal.hide();
-            displayChallengeQuestions();
-          });
+        const newQuestionId = await getNextQuestionId();
+    firestore.collection("challengeQuestion").doc(newQuestionId).set(questionData)
+      .then(() => {
+        questionModal.hide();
+        displayChallengeQuestions();
+      });
       }
     });
   }
