@@ -64,9 +64,7 @@ function displayResults(userEmail, displayName, lessons, preTests, postTests, ch
             <div class="card-body info-section">
                 <div class="text-center">
           <div style="height: 30px"></div>
-          <h4 class="prevent-select"><strong>${userEmail}</strong></h4>
-          <h4 class="prevent-select"><strong>↓</strong></h4>
-          ไม่มีข้อมูล
+          <h4 class="prevent-select"><strong>${userEmail} ไม่ได้ทำสิ่งใดเลย</strong></h4>
         </div>
             </div>
         </div>

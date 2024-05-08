@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="assets/icons/pyoneer_snake.png" type="image/x-icon">
-    <title>[ ADMIN ] PY৹NEER - จัดการผู้ใช้</title>
+    <title>[ ADMIN ] PY৹NEER - จัดการข้อสอบ Challenge</title>
     <meta name="author" content="co-authored by Apinan Loratsachan, Kraisorn Kuiraksa, Nichakorn Wangwitthayothin">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -23,29 +23,28 @@
                     <a href='javascript:window.location.replace("./../index.html");'>
                         <i class="fa-solid fa-arrow-left fa-xl back-hyperlink"></i>
                     </a>
-                    <h1 id="headerText" style="color: black; text-align: center; padding-top: 10px; margin-top: -24px;">จัดการผู้ใช้
+                    <h1 id="headerText" style="color: black; text-align: center; padding-top: 10px; margin-top: -24px;">จัดการข้อสอบ Challenge
                     </h1>
                 </div>
                 <div id="liveAlertPlaceholder"></div>
             </div>
             <!-- content -->
             <div class="container" style="padding-left: 25px; padding-right: 25px;">
-                <div id="userslist">
+                <div id="challengeQuestionList">
                 </div>
             </div>
         </div>
-        <div id="searchResultContainer"></div>
-        <button type="button" onclick="topFunction()" class="btn btn-dark" id="toTopBtn" title="Go to top">
-            <i class="fa-solid fa-arrow-up fa-2xl"></i>
-        </button>
+    </div>
+
+    <div class="container" style="padding-left: 25px; padding-right: 25px;">
+    <div id="searchResultContainer"></div>
     </div>
     <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-auth-compat.js"></script>
     <script src="https://kit.fontawesome.com/da71fc72b9.js" crossorigin="anonymous"></script>
     <script src="./../utils/firebase_services.js"></script>
-    <script src="js/manage_users.js"></script>
-    <script src="./../utils/top_botton.js"></script>
+    <script src="js/manage_challenge_question.js"></script>
 </body>
 
 </html>

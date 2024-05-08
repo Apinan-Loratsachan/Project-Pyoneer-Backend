@@ -23,7 +23,8 @@
                     <a href='javascript:window.location.replace("./../index.html");'>
                         <i class="fa-solid fa-arrow-left fa-xl back-hyperlink"></i>
                     </a>
-                    <h1 id="headerText" style="color: black; text-align: center; padding-top: 10px; margin-top: -24px;">อนุมัติ
+                    <h1 id="headerText" style="color: black; text-align: center; padding-top: 10px; margin-top: -24px;">
+                        อนุมัติ
                     </h1>
                 </div>
                 <div id="liveAlertPlaceholder"></div>
@@ -31,21 +32,18 @@
             <!-- content -->
             <div class="container" style="padding-left: 25px; padding-right: 25px;">
                 <div class="row justify-content-md-center">
-                    <form action="javascript:;" onsubmit="">
-                        <!-- <div class="form-group">
-                            <label for="InputQuery" style="width: 100%; text-align: center;">อีเมลของบัญชีที่ต้องการค้นข้อมูล</label>
-                            <div style="height: 20px;"></div>
-                            <input type="email" class="form-control" id="InputQuery" aria-describedby="emailHelp"
-                                placeholder="example@gmail.com" required style="text-align: center;">
-                            <small id="emailHelp" class="form-text text-muted"></small>
-                        </div> -->
-                        <div style="height: 20px;"></div>
-                        <div id="approveList">
-                            <div id="loginBtnContainer">
-                                <button type="submit" class="btn btn-dark" id="loginBtn"
-                                    style="width: 100%;">ค้นหา</button>
-                            </div>
-                        <div style="height: 20px;"></div>
+                    <div id="approveList">
+                        <div class="loader animate__animated animate__infinite">
+                            <span class="stroke"></span>
+                            <span class="stroke"></span>
+                            <span class="stroke"></span>
+                            <span class="stroke"></span>
+                            <span class="stroke"></span>
+                            <span class="stroke"></span>
+                            <span class="stroke"></span>
+                        </div>
+                    </div>
+                    <div style="height: 20px;"></div>
                     </form>
                 </div>
             </div>
