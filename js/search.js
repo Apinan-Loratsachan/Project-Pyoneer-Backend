@@ -1,7 +1,8 @@
 function createTable() {
-    document.getElementById(
-      "searchResultContainer"
-    ).innerHTML = `<div class="padding-space" id="result-container">
+  document.getElementById("searchResultContainer").innerHTML = "";
+  document.getElementById(
+    "searchResultContainer"
+  ).innerHTML = `<div class="padding-space" id="result-container">
       <div class="card blur animate__animated animate__zoomInDown">
           <div class="card-body info-section">
               <div id="header" class="prevent-select" style="padding: 10px;">
@@ -15,16 +16,24 @@ function createTable() {
           </div>
       </div>
   </div>`;
-  }
+}
+
+let isSearching = false;
 
 async function queryPyoneerData() {
-    const userEmails = document.getElementById("InputQuery").value.split(",").map(email => email.trim());
-    const testTypes = ["pre-test", "post-test"];
-    const collectionName = "testResult";
-    const lessonsCollectionName = "lessons";
-    const challengeScoreCollectionName = "challengeScore";
-  
-    createTable();
+  if (isSearching) return;
+  isSearching = true;
+  const userEmails = document
+    .getElementById("InputQuery")
+    .value.split(",")
+    .map((email) => email.trim());
+  const testTypes = ["pre-test", "post-test"];
+  const collectionName = "testResult";
+  const lessonsCollectionName = "lessons";
+  const challengeScoreCollectionName = "challengeScore";
+
+  createTable();
+  document.getElementById("resultContent").innerHTML = "";
 
   for (const userEmail of userEmails) {
     try {
@@ -60,15 +69,22 @@ async function queryPyoneerData() {
       console.error("Error getting documents:", error);
     }
   }
+  isSearching = false;
 }
 
-function displayResults(userEmail, lessons, preTests, postTests, challengeScore) {
-    let hasData = false;
-    let resultHTML = "";
-  
-    if (lessons.length > 0) {
-      hasData = true;
-      resultHTML += `
+function displayResults(
+  userEmail,
+  lessons,
+  preTests,
+  postTests,
+  challengeScore
+) {
+  let hasData = false;
+  let resultHTML = "";
+
+  if (lessons.length > 0) {
+    hasData = true;
+    resultHTML += `
         <div>
           <h5 class="prevent-select" id="headerText" style="color: black; text-align: center; padding-top: 10px">บทเรียน</h5>
           <div style="height: 20px;"></div>
@@ -78,11 +94,11 @@ function displayResults(userEmail, lessons, preTests, postTests, challengeScore)
         </div>
         <div style="height: 40px;"></div>
       `;
-    }
-  
-    if (preTests.length > 0 || postTests.length > 0) {
-      hasData = true;
-      resultHTML += `
+  }
+
+  if (preTests.length > 0 || postTests.length > 0) {
+    hasData = true;
+    resultHTML += `
         <div>
           <h5 class="prevent-select" id="headerText" style="color: black; text-align: center; padding-top: 10px">แบบทดสอบ</h5>
           <div style="height: 20px;"></div>
@@ -92,11 +108,11 @@ function displayResults(userEmail, lessons, preTests, postTests, challengeScore)
         </div>
         <div style="height: 40px;"></div>
       `;
-    }
-  
-    if (challengeScore) {
-      hasData = true;
-      resultHTML += `
+  }
+
+  if (challengeScore) {
+    hasData = true;
+    resultHTML += `
         <div>
           <h5 class="prevent-select" id="headerText" style="color: black; text-align: center; padding-top: 10px">Challenge</h5>
           <div style="height: 20px;"></div>
@@ -105,10 +121,10 @@ function displayResults(userEmail, lessons, preTests, postTests, challengeScore)
           </div>
         </div>
       `;
-    }
-  
-    if (hasData) {
-      document.getElementById("resultContent").innerHTML += `
+  }
+
+  if (hasData) {
+    document.getElementById("resultContent").innerHTML += `
         <div class="text-center">
           <h4><strong>${userEmail}</strong></h4>
           <h4><strong>↓</strong></h4>
@@ -116,12 +132,12 @@ function displayResults(userEmail, lessons, preTests, postTests, challengeScore)
           <hr style="border-top: 5px solid #000;">
         </div>
       `;
-    }
   }
-  
-  function createLessonsTable(lessons) {
-    lessons.sort((a, b) => a.data().lessonRead - b.data().lessonRead);
-    let tableHTML = `
+}
+
+function createLessonsTable(lessons) {
+  lessons.sort((a, b) => a.data().lessonRead - b.data().lessonRead);
+  let tableHTML = `
       <table class="table table-bordered" style="border-radius: 10px; overflow: hidden;">
         <thead>
           <tr>
@@ -138,11 +154,9 @@ function displayResults(userEmail, lessons, preTests, postTests, challengeScore)
                   <td>${lessonData.lessonRead}</td>
                   <td>${
                     lessonData.timestamp
-                      ? lessonData.timestamp
-                          .toDate()
-                          .toLocaleString("th-TH", {
-                            timeZone: "Asia/Bangkok",
-                          })
+                      ? lessonData.timestamp.toDate().toLocaleString("th-TH", {
+                          timeZone: "Asia/Bangkok",
+                        })
                       : "-"
                   }</td>
                 </tr>
@@ -152,17 +166,17 @@ function displayResults(userEmail, lessons, preTests, postTests, challengeScore)
         </tbody>
       </table>
     `;
-    return tableHTML;
-  }
-  
-  function createTestsTable(preTests, postTests) {
-    let tableHTML = "";
-    const testTypes = ["pre-test", "post-test"];
-    testTypes.forEach((testType) => {
-      const tests = testType === "pre-test" ? preTests : postTests;
-      if (tests.length > 0) {
-        tests.sort((a, b) => a.data().lessonTest - b.data().lessonTest);
-        tableHTML += `
+  return tableHTML;
+}
+
+function createTestsTable(preTests, postTests) {
+  let tableHTML = "";
+  const testTypes = ["pre-test", "post-test"];
+  testTypes.forEach((testType) => {
+    const tests = testType === "pre-test" ? preTests : postTests;
+    if (tests.length > 0) {
+      tests.sort((a, b) => a.data().lessonTest - b.data().lessonTest);
+      tableHTML += `
           <table class="table table-bordered" style="border-radius: 10px; overflow: hidden;">
             <thead>
               <tr>
@@ -201,15 +215,15 @@ function displayResults(userEmail, lessons, preTests, postTests, challengeScore)
             </tbody>
           </table>
         `;
-      }
-    });
-    return tableHTML;
-  }
-  
-  function createChallengeScoreTable(challengeScore) {
-    let tableHTML = "";
-    if (challengeScore) {
-      tableHTML = `
+    }
+  });
+  return tableHTML;
+}
+
+function createChallengeScoreTable(challengeScore) {
+  let tableHTML = "";
+  if (challengeScore) {
+    tableHTML = `
         <table class="table table-bordered" style="border-radius: 10px; overflow: hidden;">
           <thead>
             <tr>
@@ -233,9 +247,9 @@ function displayResults(userEmail, lessons, preTests, postTests, challengeScore)
           </tbody>
         </table>
       `;
-    }
-    return tableHTML;
   }
+  return tableHTML;
+}
 
 function msToTime(s) {
   var ms = s % 1000;

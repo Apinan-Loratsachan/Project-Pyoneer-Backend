@@ -39,7 +39,7 @@ body {
     color: #fff;
 }
 
-#login-container{
+#login-container {
     max-width: 1000px;
 }
 
@@ -80,13 +80,14 @@ body {
     transition: all ease-in-out 0.25s;
     width: fit-content;
     padding: 20px;
+
     &:hover {
         transform: translateY(-10px);
         scale: 1.2;
     }
 }
 
-.main-hyperlink{
+.main-hyperlink {
     text-decoration: none;
     color: #2e2e2e;
 }
@@ -104,6 +105,7 @@ body {
 .back-hyperlink {
     transition: all ease-in-out 0.25s;
     color: #2e2e2e;
+
     &:hover {
         scale: 1.5;
     }
@@ -148,11 +150,11 @@ body {
     cursor: pointer;
     padding: 15px;
     border-radius: 4px;
-  }
-  
-  #toTopBtn:hover {
+}
+
+#toTopBtn:hover {
     background-color: #555;
-  }
+}
 
 .table-container {
     display: block;
@@ -212,6 +214,8 @@ td {
     border-collapse: collapse;
     padding-top: 10px;
     padding-bottom: 10px;
+    padding-left: 25px;
+    padding-right: 25px;
 }
 
 #copyResultModal {

@@ -17,51 +17,6 @@ function createTable() {
   </div>`;
   }
 
-async function queryPyoneerData123() {
-    const userEmails = document.getElementById("InputQuery").value.split(",").map(email => email.trim());
-    const testTypes = ["pre-test", "post-test"];
-    const collectionName = "testResult";
-    const lessonsCollectionName = "lessons";
-    const challengeScoreCollectionName = "challengeScore";
-  
-    createTable();
-
-  for (const userEmail of userEmails) {
-    try {
-      const lessonsCollectionRef = firestore.collection(lessonsCollectionName);
-      const lessonsSnapshot = await lessonsCollectionRef
-        .where("email", "==", userEmail)
-        .get();
-
-      const preTestSnapshot = await firestore
-        .collection(collectionName)
-        .doc(userEmail)
-        .collection("pre-test")
-        .get();
-      const postTestSnapshot = await firestore
-        .collection(collectionName)
-        .doc(userEmail)
-        .collection("post-test")
-        .get();
-
-      const challengeScoreDocRef = firestore
-        .collection(challengeScoreCollectionName)
-        .doc(userEmail);
-      const challengeScoreDoc = await challengeScoreDocRef.get();
-
-      displayResults(
-        userEmail,
-        lessonsSnapshot.docs,
-        preTestSnapshot.docs,
-        postTestSnapshot.docs,
-        challengeScoreDoc.data()
-      );
-    } catch (error) {
-      console.error("Error getting documents:", error);
-    }
-  }
-}
-
 function displayResults(userEmail, lessons, preTests, postTests, challengeScore) {
     let hasData = false;
     let resultHTML = "";

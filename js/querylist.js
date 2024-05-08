@@ -4,23 +4,25 @@ async function queryPyoneerData() {
     .value.split(",")
     .map((email) => email.trim());
   const querylist = document.getElementById("querylist");
-  querylist.innerHTML = `<div>
-                <table>
+  querylist.innerHTML = `<div style="overflow-x:auto;">
+                <table class="">
                 <colgroup>
-                    <col style="width: 20%">
-                    <col style="width: 23%">
-                    <col style="width: 23%">
-                    <col style="width: 10%">
-                    <col style="width: 10%">
+                  <col style="width: 20%">
+                  <col style="width: 23%">
+                  <col style="width: 23%">
+                  <col style="width: 10%">
+                  <col style="width: 10%">
                 </colgroup>
+                <thead>
+                  <tr>
+                      <th><b>อีเมล</b></th>
+                      <th><b>ชื่อผู้ใช้</b></th>
+                      <th><b>รหัสผู้ใช้</b></th>
+                      <th></th>
+                      <th></th>
+                  </tr>
+                </thead>
                 <tbody id="resultTable">
-                    <tr>
-                        <th><b>Email</b></th>
-                        <th><b>Display Name</b></th>
-                        <th><b>UID</b></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
                 </tbody>
                 </table>
             </div>`;
@@ -39,37 +41,37 @@ async function queryPyoneerData() {
         listItem.classList.add("list-item");
 
         const isBookmarked = await isEmailBookmarked(userEmail);
-      const buttonClass = isBookmarked ? "btn-danger remove-btn" : "btn-primary save-btn";
-      const buttonText = isBookmarked ? "ลบ" : "เพิ่ม";
+        const buttonClass = isBookmarked ? "btn-danger remove-btn" : "btn-primary save-btn";
+        const buttonText = isBookmarked ? "ลบ" : "เพิ่ม";
 
         listItem.innerHTML = `
                 <td>${userEmail}</td>
                 <td>${displayName}</td>
                 <td>${uid}</td>
                 <td><button class="btn ${buttonClass}" data-email="${userEmail}">${buttonText}</button></td>
-                <td><button class="btn btn-secondary view-btn" data-email="${userEmail}">ดูข้อมูล</button></td>
+                <td><button class="btn btn-secondary view-btn" data-email="${userEmail}">ข้อมูล</button></td>
                 `;
         document.getElementById("resultTable").appendChild(listItem);
 
         const saveButton = listItem.querySelector(".save-btn");
-      if (saveButton) {
-        saveButton.addEventListener("click", async () => {
-          await addToBookmark(userEmail);
-          saveButton.classList.replace("btn-primary", "btn-danger");
-          saveButton.classList.replace("save-btn", "remove-btn");
-          saveButton.textContent = "ลบ";
-        });
-      }
+        if (saveButton) {
+          saveButton.addEventListener("click", async () => {
+            await addToBookmark(userEmail);
+            saveButton.classList.replace("btn-primary", "btn-danger");
+            saveButton.classList.replace("save-btn", "remove-btn");
+            saveButton.textContent = "ลบ";
+          });
+        }
 
-      const removeButton = listItem.querySelector(".remove-btn");
-      if (removeButton) {
-        removeButton.addEventListener("click", async () => {
-          await removeFromBookmark(userEmail);
-          removeButton.classList.replace("btn-danger", "btn-primary");
-          removeButton.classList.replace("remove-btn", "save-btn");
-          removeButton.textContent = "เพิ่ม";
-        });
-      }
+        const removeButton = listItem.querySelector(".remove-btn");
+        if (removeButton) {
+          removeButton.addEventListener("click", async () => {
+            await removeFromBookmark(userEmail);
+            removeButton.classList.replace("btn-danger", "btn-primary");
+            removeButton.classList.replace("remove-btn", "save-btn");
+            removeButton.textContent = "เพิ่ม";
+          });
+        }
       } else {
         const listItem = document.createElement("div");
         listItem.classList.add("list-item");
@@ -82,13 +84,13 @@ async function queryPyoneerData() {
   }
 
   const saveButtons = document.querySelectorAll(".save-btn");
-saveButtons.forEach((button) => {
-  button.addEventListener("click", async () => {
-    const userEmail = button.dataset.email;
-    await addToBookmark(userEmail);
-    // displayBookmarks();
+  saveButtons.forEach((button) => {
+    button.addEventListener("click", async () => {
+      const userEmail = button.dataset.email;
+      await addToBookmark(userEmail);
+      // displayBookmarks();
+    });
   });
-});
 
   const viewButtons = document.querySelectorAll(".view-btn");
   viewButtons.forEach((button) => {
@@ -168,26 +170,29 @@ async function displayBookmarks() {
       const bookmarkedEmails = bookmarkData.emails;
 
       if (bookmarkedEmails.length > 0) {
-        querylist.innerHTML = `<div>
-                  <table>
-                  <colgroup>
-                      <col style="width: 20%">
-                      <col style="width: 23%">
-                      <col style="width: 23%">
-                      <col style="width: 10%">
-                      <col style="width: 10%">
-                  </colgroup>
-                  <tbody id="bookmarkTable">
-                      <tr>
-                          <th><b>Email</b></th>
-                          <th><b>Display Name</b></th>
-                          <th><b>UID</b></th>
-                          <th></th>
-                          <th></th>
-                      </tr>
-                  </tbody>
-                  </table>
-              </div>`;
+        querylist.innerHTML = `
+        <div style="overflow-x:auto;">
+          <table class="">
+            <colgroup>
+                <col style="width: 20%">
+                <col style="width: 23%">
+                <col style="width: 23%">
+                <col style="width: 10%">
+                <col style="width: 10%">
+            </colgroup>
+            <thead>
+              <tr>
+                    <th><b>อีเมล</b></th>
+                    <th><b>ชื่อผู้ใช้</b></th>
+                    <th><b>รหัสผู้ใช้</b></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="bookmarkTable">
+            </tbody>
+          </table>
+        </div>`;
 
         for (const userEmail of bookmarkedEmails) {
           const userDocRef = firestore.collection("users").doc(userEmail);
@@ -205,7 +210,7 @@ async function displayBookmarks() {
                       <td>${displayName}</td>
                       <td>${uid}</td>
                       <td><button class="btn btn-danger remove-bookmark-btn" data-email="${userEmail}">ลบ</button></td>
-                      <td><button class="btn btn-secondary view-bookmark-btn" data-email="${userEmail}">ดูข้อมูล</button></td>
+                      <td><button class="btn btn-secondary view-bookmark-btn" data-email="${userEmail}">ข้อมูล</button></td>
                       `;
             document.getElementById("bookmarkTable").appendChild(listItem);
 
