@@ -5,15 +5,17 @@ async function displayUsers() {
                   <colgroup>
                     <col style="width: 30%">
                     <col style="width: 30%">
+                    <col style="width: 30%">
                     <col style="width: 15%">
                     <col style="width: 10%">
-                    <col style="width: 15%">
+                    <col style="width: 20%">
                   </colgroup>
                   <thead>
                     <tr>
-                        <th><b>Email</b></th>
-                        <th><b>Display Name</b></th>
-                        <th><b>UID</b></th>
+                        <th><b></b></th>
+                        <th><b>ชื่อผู้ใช้</b></th>
+                        <th><b>อีเมล</b></th>
+                        <th><b>รหัสผู้ใช้</b></th>
                         <th colspan="2"></th>
                     </tr>
                   </thead>
@@ -31,20 +33,23 @@ async function displayUsers() {
       const userData = doc.data();
       const listItem = document.createElement("tr");
       listItem.innerHTML = `
-            <td>${userEmail}</td>
+            <td class="text-center prevent-all">
+              <img src="${userData.photoURL}" alt="Profile Image" style="width: 40px; height: 40px; border-radius: 50%;">
+            </td>
             <td>${userData.displayName}</td>
+            <td>${userEmail}</td>
             <td>${userData.uid}</td>
             <td>
               <div class="d-grid gap-2">
-                <button type="botton" class="btn btn-secondary view-btn" data-email="${userEmail}">
+                <button type="button" class="btn btn-primary view-btn" data-email="${userEmail}">
                   ข้อมูล
                 </button>
               </div>
             </td>
             <td>
             <div class="d-grid gap-2">
-                <button type="botton" class="btn btn-danger delete-btn" data-email="${userEmail}">
-                  ลบข้อมูล
+                <button type="button" class="btn btn-danger delete-btn" data-email="${userEmail}">
+                  ลบ
                 </button>
               </div>
             </td>

@@ -10,9 +10,9 @@ async function displayApproveData() {
                 </colgroup>
                 <thead>
                   <tr class="text-center">
-                      <th><b>Email</b></th>
-                      <th><b>Name</b></th>
-                      <th><b>UID</b></th>
+                      <th><b>อีเมล</b></th>
+                      <th><b>ชื่อผู้ใช้</b></th>
+                      <th><b>รหัสผู้ใช้</b></th>
                       <th></th>
                   </tr>
                 </thead>
@@ -44,7 +44,7 @@ async function displayApproveData() {
       <td>${data.UID}</td>
       <td class="text-center">
       <div class="d-grid gap-2">
-          <button type="botton" class="btn ${
+          <button type="button" class="btn ${
             data.approve ? "btn-danger" : "btn-success"
           } approve-btn" data-id="${data.id}">
             ${data.approve ? "ยกเลิกการอนุมัติ" : "อนุมัติ"}

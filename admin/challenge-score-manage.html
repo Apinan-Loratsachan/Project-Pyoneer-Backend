@@ -23,7 +23,8 @@
                     <a href='javascript:window.location.replace("./../index.html");'>
                         <i class="fa-solid fa-arrow-left fa-xl back-hyperlink"></i>
                     </a>
-                    <h1 id="headerText" style="color: black; text-align: center; padding-top: 10px; margin-top: -24px;">จัดการคะแนน Challenge
+                    <h1 id="headerText" style="color: black; text-align: center; padding-top: 10px; margin-top: -24px;">
+                        จัดการคะแนน Challenge
                     </h1>
                 </div>
                 <div id="liveAlertPlaceholder"></div>
@@ -37,13 +38,17 @@
     </div>
 
     <div class="container" style="padding-left: 25px; padding-right: 25px;">
-    <div id="searchResultContainer"></div>
+        <div id="searchResultContainer"></div>
     </div>
+    <button type="button" onclick="topFunction()" class="btn btn-dark" id="toTopBtn" title="Go to top">
+        <i class="fa-solid fa-arrow-up fa-2xl"></i>
+    </button>
     <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-auth-compat.js"></script>
     <script src="https://kit.fontawesome.com/da71fc72b9.js" crossorigin="anonymous"></script>
     <script src="./../utils/firebase_services.js"></script>
+    <script src="./../utils/top_botton.js"></script>
     <script src="js/manage_challenge_score.js"></script>
 </body>
 

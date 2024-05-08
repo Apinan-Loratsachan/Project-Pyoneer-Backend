@@ -4,7 +4,7 @@ async function displayChallengeQuestions() {
   const challengeQuestionList = document.getElementById("challengeQuestionList");
   challengeQuestionList.innerHTML = `
     <div style="overflow-x:auto;">
-      <table class="">
+      <table class="table table-hover" style="border-radius: 5px; overflow: hidden;">
         <thead>
           <tr>
             <th><b>รหัสข้อสอบ</b></th>
@@ -17,6 +17,7 @@ async function displayChallengeQuestions() {
         <tbody id="challengeQuestionsTable"></tbody>
       </table>
     </div>
+    <div style="height: 30px;"></div>
     <div class="d-grid gap-2">
       <button type="button" class="btn btn-primary" id="addQuestionBtn">เพิ่มข้อสอบใหม่</button>
     </div>
@@ -33,7 +34,7 @@ async function displayChallengeQuestions() {
       <td>${questionData.correctChoice}</td>
       <td>
         <div class="d-grid gap-2">
-          <button type="button" class="btn btn-secondary edit-btn" data-id="${doc.id}">แก้ไข</button>
+          <button type="button" class="btn btn-primary edit-btn" data-id="${doc.id}">แก้ไข</button>
           <button type="button" class="btn btn-danger delete-btn" data-id="${doc.id}">ลบ</button>
         </div>
       </td>
@@ -140,16 +141,31 @@ function showQuestionModal(questionId) {
     questionModal = new bootstrap.Modal(questionModal);
 
     document.getElementById("saveQuestionBtn").addEventListener("click", async () => {
+        const question = document.getElementById("question").value.trim();
+        const choice1 = document.getElementById("choice1").value.trim();
+        const choice2 = document.getElementById("choice2").value.trim();
+        const choice3 = document.getElementById("choice3").value.trim();
+        const choice4 = document.getElementById("choice4").value.trim();
+        const correctChoice = document.getElementById("correctChoice").value;
+        const imageUrl = document.getElementById("imageUrl").value.trim();
+      
+        if (!question || !choice1 || !choice2 || !choice3 || !choice4 || !correctChoice) {
+          alert("กรุณากรอกข้อมูลให้ครบถ้วนในช่อง:\n" +
+            (!question ? "- คำถาม\n" : "") +
+            (!choice1 ? "- ตัวเลือก 1\n" : "") +
+            (!choice2 ? "- ตัวเลือก 2\n" : "") +
+            (!choice3 ? "- ตัวเลือก 3\n" : "") +
+            (!choice4 ? "- ตัวเลือก 4\n" : "") +
+            (!correctChoice ? "- คำตอบที่ถูกต้อง\n" : "")
+          );
+          return;
+        }
+      
         const questionData = {
-          question: document.getElementById("question").value,
-          choice: [
-            document.getElementById("choice1").value,
-            document.getElementById("choice2").value,
-            document.getElementById("choice3").value,
-            document.getElementById("choice4").value,
-          ],
-          correctChoice: document.getElementById(`choice${document.getElementById("correctChoice").value}`).value,
-          imageUrl: document.getElementById("imageUrl").value,
+          question: question,
+          choice: [choice1, choice2, choice3, choice4],
+          correctChoice: document.getElementById(`choice${correctChoice}`).value,
+          imageUrl: imageUrl,
         };
 
       if (questionModal.questionId) {
@@ -165,7 +181,7 @@ function showQuestionModal(questionId) {
         questionModal.hide();
         displayChallengeQuestions();
       });
-      }
+  }
     });
   }
 

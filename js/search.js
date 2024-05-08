@@ -50,7 +50,7 @@ async function queryPyoneerData() {
                 <td>${displayName}</td>
                 <td>${uid}</td>
                 <td clsss="prevent-select"><button id="${uid}" class="btn ${buttonClass}" data-email="${userEmail}" onclick="searchActionBtn('${uid}', '${userEmail}')">${buttonText}</button></td>
-                <td clsss="prevent-select"><button class="btn btn-secondary view-btn" data-email="${userEmail}" data-displayname="${displayName}">ข้อมูล</button></td>
+                <td clsss="prevent-select"><button class="btn btn-dark view-btn" data-email="${userEmail}" data-displayname="${displayName}">ข้อมูล</button></td>
                 `;
         document.getElementById("resultTable").appendChild(listItem);
       } else {
@@ -209,7 +209,7 @@ async function displayBookmarks() {
                       <td>${displayName}</td>
                       <td>${uid}</td>
                       <td clsss="prevent-select"><button class="btn btn-danger remove-bookmark-btn" data-email="${userEmail}">ลบ</button></td>
-                      <td clsss="prevent-select"><button class="btn btn-secondary view-bookmark-btn" data-email="${userEmail}">ข้อมูล</button></td>
+                      <td clsss="prevent-select"><button class="btn btn-dark view-bookmark-btn" data-email="${userEmail}">ข้อมูล</button></td>
                       `;
             document.getElementById("bookmarkTable").appendChild(listItem);
 
