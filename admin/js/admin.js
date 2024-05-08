@@ -4,7 +4,7 @@ firebase.auth().onAuthStateChanged(async (user) => {
         adminData = await getDocumentFromFirestore("admin", user.email)
         if (adminData == null) {
             if (nowPath.includes('/Project-Pyoneer-Backend')) {
-                window.location.replace("index.html");
+                window.location.replace("login.html");
             } else {
                 window.location.replace("./../index.html");
             }
