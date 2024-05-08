@@ -45,17 +45,17 @@ function displayResults(userEmail, displayName, lessons, preTests, postTests, ch
   if (hasData) {
     document.getElementById("searchResultContainer").innerHTML = `
     <div style="height: 40px;"></div>
-        <div class="card blur animate__animated animate__zoomIn">
-            <div class="card-body info-section">
-                <div class="text-center">
+    <div class="card blur animate__animated animate__zoomIn">
+      <div class="card-body info-section">
+        <div class="text-center">
           <div style="height: 30px"></div>
           <h4 class="prevent-select"><b>ข้อมูลของ ${userEmail}</b></h4>
           <h5 class="prevent-select">${displayName}</h5>
           <div style="height: 30px;"></div>
           ${resultHTML}
         </div>
-            </div>
-        </div>
+      </div>
+    </div>
       `;
   } else {
     document.getElementById("searchResultContainer").innerHTML = `

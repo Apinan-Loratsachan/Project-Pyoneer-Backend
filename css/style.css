@@ -212,6 +212,7 @@ td {
     /* border: 1px solid black; */
     height: 40px;
     border-collapse: collapse;
+    border-bottom: solid 1px;
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 25px;

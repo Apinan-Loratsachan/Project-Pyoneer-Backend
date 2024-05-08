@@ -25,7 +25,8 @@ async function queryPyoneerData() {
                 <tbody id="resultTable" clsss="text-center">
                 </tbody>
                 </table>
-            </div>`;
+            </div>
+            <div style="height: 40px;"></div>`;
 
   for (const userEmail of userEmails) {
     try {
@@ -79,13 +80,6 @@ async function queryPyoneerData() {
         `searchResultContainer-${userEmail}`
       );
       const row = button.closest("tr");
-
-      if (!searchResultContainer) {
-        // ถ้ายังไม่มี searchResultContainer ให้สร้างใหม่
-        searchResultContainer = document.createElement("div");
-        searchResultContainer.id = `searchResultContainer-${userEmail}`;
-        row.insertAdjacentElement("afterend", searchResultContainer);
-      }
 
       await displayUserData(userEmail, displayName, searchResultContainer);
     });
@@ -196,7 +190,8 @@ async function displayBookmarks() {
             <tbody id="bookmarkTable">
             </tbody>
           </table>
-        </div>`;
+        </div>
+        <div style="height: 40px;"></div>`;
 
         for (const userEmail of bookmarkedEmails) {
           const userDocRef = firestore.collection("users").doc(userEmail);
@@ -231,12 +226,6 @@ async function displayBookmarks() {
                 `searchResultContainer-${userEmail}`
               );
               const row = viewButton.closest("tr");
-
-              if (!searchResultContainer) {
-                searchResultContainer = document.createElement("div");
-                searchResultContainer.id = `searchResultContainer-${userEmail}`;
-                row.insertAdjacentElement("afterend", searchResultContainer);
-              }
 
               await displayUserData(userEmail, displayName, searchResultContainer);
             });

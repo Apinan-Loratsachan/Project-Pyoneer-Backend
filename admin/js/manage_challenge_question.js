@@ -4,7 +4,7 @@ async function displayChallengeQuestions() {
   const challengeQuestionList = document.getElementById("challengeQuestionList");
   challengeQuestionList.innerHTML = `
     <div style="overflow-x:auto;">
-      <table class="table">
+      <table class="">
         <thead>
           <tr>
             <th><b>รหัสข้อสอบ</b></th>
@@ -61,6 +61,21 @@ async function displayChallengeQuestions() {
     });
   });
 }
+
+async function getNextQuestionId() {
+    const snapshot = await firestore.collection("challengeQuestion")
+      .orderBy("__name__", "desc")
+      .limit(1)
+      .get();
+  
+    if (snapshot.empty) {
+      return "0001";
+    } else {
+      const lastQuestionId = snapshot.docs[0].id;
+      const nextNumber = parseInt(lastQuestionId, 10) + 1;
+      return nextNumber.toString().padStart(4, "0");
+    }
+  }
 
 let questionModal = null;
 
