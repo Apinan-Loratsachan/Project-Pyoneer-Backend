@@ -62,14 +62,17 @@ async function displayChallengeQuestions() {
   });
 }
 
+let questionModal = null;
+
 function showQuestionModal(questionId) {
-    const modal = document.createElement("div");
-    modal.classList.add("modal", "fade");
-    modal.innerHTML = `
+  if (!questionModal) {
+    questionModal = document.createElement("div");
+    questionModal.classList.add("modal", "fade");
+    questionModal.innerHTML = `
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">${questionId ? "แก้ไขข้อสอบ" : "เพิ่มข้อสอบใหม่"}</h5>
+            <h5 class="modal-title"></h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
@@ -112,31 +115,15 @@ function showQuestionModal(questionId) {
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
-            <button type="button" class="btn btn-primary" id="saveQuestionBtn">${questionId ? "บันทึกการแก้ไข" : "เพิ่มข้อสอบ"}</button>
+            <button type="button" class="btn btn-primary" id="saveQuestionBtn"></button>
           </div>
         </div>
       </div>
     `;
-    document.body.appendChild(modal);
-  
-    const questionModal = new bootstrap.Modal(modal);
-    questionModal.show();
-  
-    if (questionId) {
-      // Populate form fields with existing question data
-      firestore.collection("challengeQuestion").doc(questionId).get()
-        .then((doc) => {
-          const questionData = doc.data();
-          document.getElementById("question").value = questionData.question;
-          document.getElementById("choice1").value = questionData.choice[0];
-          document.getElementById("choice2").value = questionData.choice[1];
-          document.getElementById("choice3").value = questionData.choice[2];
-          document.getElementById("choice4").value = questionData.choice[3];
-          document.getElementById("correctChoice").value = questionData.choice.indexOf(questionData.correctChoice) + 1;
-          document.getElementById("imageUrl").value = questionData.imageUrl || "";
-        });
-    }
-  
+    document.body.appendChild(questionModal);
+
+    questionModal = new bootstrap.Modal(questionModal);
+
     document.getElementById("saveQuestionBtn").addEventListener("click", () => {
       const questionData = {
         question: document.getElementById("question").value,
@@ -149,16 +136,14 @@ function showQuestionModal(questionId) {
         correctChoice: document.getElementById(`choice${document.getElementById("correctChoice").value}`).value,
         imageUrl: document.getElementById("imageUrl").value,
       };
-  
-      if (questionId) {
-        // Update existing question
-        firestore.collection("challengeQuestion").doc(questionId).update(questionData)
+
+      if (questionModal.questionId) {
+        firestore.collection("challengeQuestion").doc(questionModal.questionId).update(questionData)
           .then(() => {
             questionModal.hide();
             displayChallengeQuestions();
           });
       } else {
-        // Add new question
         firestore.collection("challengeQuestion").add(questionData)
           .then(() => {
             questionModal.hide();
@@ -167,6 +152,39 @@ function showQuestionModal(questionId) {
       }
     });
   }
+
+  if (questionId) {
+    firestore.collection("challengeQuestion").doc(questionId).get()
+      .then((doc) => {
+        const questionData = doc.data();
+        document.getElementById("question").value = questionData.question;
+        document.getElementById("choice1").value = questionData.choice[0];
+        document.getElementById("choice2").value = questionData.choice[1];
+        document.getElementById("choice3").value = questionData.choice[2];
+        document.getElementById("choice4").value = questionData.choice[3];
+        document.getElementById("correctChoice").value = questionData.choice.indexOf(questionData.correctChoice) + 1;
+        document.getElementById("imageUrl").value = questionData.imageUrl || "";
+
+        document.querySelector(".modal-title").textContent = "แก้ไขข้อสอบ";
+        document.getElementById("saveQuestionBtn").textContent = "บันทึกการแก้ไข";
+      });
+    questionModal.questionId = questionId;
+  } else {
+    document.getElementById("question").value = "";
+    document.getElementById("choice1").value = "";
+    document.getElementById("choice2").value = "";
+    document.getElementById("choice3").value = "";
+    document.getElementById("choice4").value = "";
+    document.getElementById("correctChoice").value = "";
+    document.getElementById("imageUrl").value = "";
+
+    document.querySelector(".modal-title").textContent = "เพิ่มข้อสอบใหม่";
+    document.getElementById("saveQuestionBtn").textContent = "เพิ่มข้อสอบ";
+    questionModal.questionId = null;
+  }
+
+  questionModal.show();
+}
 
 async function deleteQuestion(questionId) {
   if (confirm("คุณต้องการลบข้อสอบนี้หรือไม่?")) {
