@@ -33,6 +33,28 @@ firebase.auth().onAuthStateChanged(async (user) => {
                 window.location.replace("login.html");
             }
         }
+        
+        // Check if the user is a teacher and set teacherCode
+        if (userApproveData.isTeacher) {
+            const userDoc = await firestore.collection('users').doc(user.email).get();
+            const userData = userDoc.data();
+        
+            if (userData && userData.teacherCode) {
+                console.log('User already has a teacherCode:', userData.teacherCode);
+            } else {
+                let teacherCode = '';
+                let isTeacherCode = await isTeacherCodeExists(teacherCode);
+        
+                while (isTeacherCode) {
+                    teacherCode = generateTeacherCode();
+                    console.log('Generated new teacherCode:', teacherCode);
+                    isTeacherCode = await isTeacherCodeExists(teacherCode);
+                    console.log('isTeacherCode:', isTeacherCode);
+                }
+        
+                await setTeacherCode(user.email, teacherCode);
+            }
+        }
     }
 });
 
@@ -70,3 +92,55 @@ function getDocumentFromFirestore(collectionName, documentId) {
             return null;
         });
 }
+
+
+function generateTeacherCode() {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let code = '';
+    for (let i = 0; i < 8; i++) {
+        code += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    console.log('Generated teacherCode:', code);
+    return code;
+}
+
+async function isTeacherCodeExists(teacherCode) {
+    try {
+      const usersCollection = firestore.collection('users');
+      const querySnapshot = await usersCollection.get();
+      let exists = false;
+  
+      querySnapshot.forEach((doc) => {
+        if (doc.data().teacherCode === teacherCode) {
+          exists = true;
+        }
+      });
+  
+      return exists;
+    } catch (error) {
+      console.error('Error in isTeacherCodeExists:', error);
+      return false;
+    }
+  }
+
+  async function setTeacherCode(email, teacherCode) {
+    try {
+      const usersCollection = firestore.collection('users');
+      const userDoc = await usersCollection.doc(email).get();
+  
+      if (userDoc.exists) {
+        const userData = userDoc.data();
+        if (userData.teacherCode !== teacherCode) {
+          await usersCollection.doc(email).update({ teacherCode: teacherCode });
+          console.log('teacherCode updated successfully for email:', email);
+        } else {
+          console.log('teacherCode is already up-to-date for email:', email);
+        }
+      } else {
+        await usersCollection.doc(email).set({ teacherCode: teacherCode });
+        console.log('teacherCode set successfully for email:', email);
+      }
+    } catch (error) {
+      console.error('Error setting teacherCode:', error);
+    }
+  }
