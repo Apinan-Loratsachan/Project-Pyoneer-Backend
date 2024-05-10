@@ -60,7 +60,7 @@ firebase.auth().onAuthStateChanged(async (user) => {
                 window.location.replace("verify.html");
             }
         } else {
-            await writeToFirestore(approve, user.email, { UID: user.uid, Name: user.displayName, approve: false, timeStamp: new Date });
+            await writeToFirestore(approve, user.email, { UID: user.uid, Name: user.displayName, approve: false, isTeacher: true, timeStamp: new Date });
             window.location.replace("verify.html");
         }
     } else {
